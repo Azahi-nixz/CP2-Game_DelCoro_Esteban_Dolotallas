@@ -4,7 +4,6 @@ from Maruzensky import Maruzen
 # ===============================
 # MENU
 # ===============================
-
 def menu():
 
     while True:
@@ -12,9 +11,49 @@ def menu():
             choice_one = int(input("""
 Choose a character for Player 1
 1. Maruzen
+2. Giga
+3. Jexikun
+4. Leah
+5. Trish
+6. Julian
+7. Icanfixher
+8. Lolicon
+9. Taracoffee
+10. CollectorBaddie
+11. Igop                                  
 > """))
 
             if choice_one == 1:
+                break
+
+            elif choice_one == 2:
+                break
+
+            elif choice_one == 3:
+                break
+
+            elif choice_one == 4:
+                break
+
+            elif choice_one == 5:
+                break
+
+            elif choice_one == 6:
+                break
+
+            elif choice_one == 7:
+                break
+
+            elif choice_one == 8:
+                break
+
+            elif choice_one == 9:
+                break
+
+            elif choice_one == 10:
+                break
+
+            elif choice_one == 11:
                 break
             else:
                 print("Invalid choice.")
@@ -27,10 +66,51 @@ Choose a character for Player 1
             choice_two = int(input("""
 Choose a character for Player 2
 1. Maruzen
+2. Giga
+3. Jexikun
+4. Leah
+5. Trish
+6. Julian
+7. Icanfixher
+8. Lolicon
+9. Taracoffee
+10. CollectorBaddie
+11. Igop                                                
 > """))
 
             if choice_two == 1:
                 break
+
+            elif choice_two == 2:
+                break
+
+            elif choice_two == 3:
+                break
+
+            elif choice_two == 4:
+                break
+
+            elif choice_two == 5:
+                break
+
+            elif choice_two == 6:
+                break
+
+            elif choice_two == 7:
+                break
+
+            elif choice_two == 8:
+                break
+
+            elif choice_two == 9:
+                break
+
+            elif choice_two == 10:
+                break
+
+            elif choice_two == 11:
+                break
+
             else:
                 print("Invalid choice.")
 
