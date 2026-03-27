@@ -80,3 +80,7 @@ class Character:
         if cd != 0:
             return f"Cooldown: {cd}"
         return "Ready!"
+    
+    def check_hit(self):
+        chance = self.Atk / (self.Atk + self.Spd) 
+        return random.random() < chance
