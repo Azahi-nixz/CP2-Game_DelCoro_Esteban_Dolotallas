@@ -1,5 +1,5 @@
 class Character:
-
+    # Experiment
     def __init__(self, Name, Hp, Atk, Mana, Sanity, Spd, Acc, Eff):
 
         self.Name = Name
