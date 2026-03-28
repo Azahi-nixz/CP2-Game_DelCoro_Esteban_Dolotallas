@@ -1,118 +1,208 @@
 import random
-
 from Characters import Character
 
 
 class Maruzen(Character):
 
     def __init__(self):
-        super().__init__("Maruzen", 30, 5, 0, 100, 30, 70, 0)
+        super().__init__("Maruzen", 30, 0, 0, 100, 30, 70, 0)
 
+        self.skills = {
+            1: self.basic_attack,
+            2: self.skill_1,
+            3: self.skill_2,
+            4: self.skill_3
+        }
+
+        self.last_damage_taken = 0
+        self.first_turn = True
+
+        self.death_immunity_turns = 0
+        self.negative_hp_turns = 0
+
+    # ==========================
+    # STATE
+    # ==========================
+
+    def is_enraged(self):
+        return self.Form == "enraged"
+
+    def check_transformation(self):
+        if self.Sanity <= 30 and self.Form != "enraged":
+            print("Entered ENRAGED MODE!")
+            self.Form = "enraged"
+            self.death_immunity_turns = 2
+            self.negative_hp_turns = 2
+
+    # ==========================
+    # PASSIVE
+    # ==========================
+
+    def take_damage(self, dmg, enemy=None):
+
+        if self.has_buff("Invincible"):
+            print(f"{self.Name} is invincible! No damage taken!")
+            return
+
+        # first turn instant kill immunity
+        if self.first_turn and dmg >= self.Hp:
+            print("Immune to instant kill on first turn!")
+            dmg = self.Hp - 1
+
+        if self.is_enraged():
+            reflected = dmg * 0.75
+            if enemy:
+                enemy.Hp -= reflected
+                print(f"Reflected {reflected} damage!")
+
+            dmg *= 0.25
+        else:
+            self.Sanity -= 10
+
+        self.Hp -= dmg
+        self.last_damage_taken = dmg
+
+        print(f"{self.Name} took {dmg} damage!")
+
+
+        # sanity death
+        if self.Sanity <= 0:
+            print("Sanity depleted! Maruzen dies!")
+            self.Hp = 0
+
+    def end_turn_checks(self):
+
+        if self.is_enraged():
+
+            if self.Hp <= 0 < self.death_immunity_turns:
+                print("Survived with death immunity!")
+                self.death_immunity_turns -= 1
+
+            elif self.Hp <= 0:
+                print("Maruzen has fallen!")
+
+            if self.Hp < 0:
+                self.negative_hp_turns -= 1
+
+                if self.negative_hp_turns <= 0:
+                    print("Failed to recover from negative HP!")
+                    self.Hp = 0
+
+    # ==========================
+    # NORMAL FORM
+    # ==========================
 
     def basic_attack(self, enemy):
 
-        print("Maruzen used Basic Attack!")
+        if self.is_enraged():
+            return self.enraged_basic(enemy)
 
-        if enemy.has_buff("Invincible"):
-            print("Enemy is immune!")
-            return False
+        print("Why would I fight?")
 
-        enemy.Hp -= self.Atk
         self.Sanity += 10
 
-        chance = random.random()
-
-        if chance < 0.1:
-            print("Why should I fight activated! Bonus turn!")
+        if random.random() < 0.1:
+            print("Bonus turn!")
             return True
 
         return False
-
 
     def skill_1(self, enemy):
 
-        print("Maruzen used Skill 1!")
+        if self.is_enraged():
+            return self.enraged_skill_1(enemy)
 
-        if not self.enraged():
+        print("Please slap me")
 
-            enemy_dmg = enemy.Atk
-            self.Hp += enemy_dmg
-            self.Sanity -= 20
-
-        else:
-
-            chance = random.random()
-
-            if chance <= 0.05:
-                print("Enemy surrendered!")
-                enemy.Hp = 0
-            else:
-                print("Manipulation failed!")
-
+        self.Hp += self.last_damage_taken
+        self.Sanity -= 20
 
     def skill_2(self, enemy):
 
-        if not self.enraged():
+        if self.is_enraged():
+            return self.enraged_skill_2(enemy)
 
-            print("Maruzen became immune for 2 turns!")
+        print("Immune to physical damage!")
+        self.add_buff("Invincible", 2)
+        self.Sanity -= 30
 
-            self.add_buff("Invincible", 2)
+    def skill_3(self, enemy):
 
+        if self.is_enraged():
+            return self.enraged_skill_3(enemy)
+
+        print("Unreal calculation")
+
+        guess = int(input("Predict enemy move: 1. Basic Attack | 2. Skill 1 | 3. Skill 2 | 4. Skill 3 "))
+        actual = int(input("Enemy move: 1. Basic Attack | 2. Skill 1 | 3. Skill 2 | 4. Skill 3 "))
+
+        if guess == actual:
+            enemy.Hp -= self.last_damage_taken
+            print("Prediction success!")
+            self.Sanity -= 20
         else:
+            self.Sanity -= 40
+            print("Prediction failed!")
 
-            dmg = 30 + ((120 - self.Sanity) / 10)
+    # ==========================
+    # ENRAGED FORM
+    # ==========================
+
+    def enraged_basic(self, enemy):
+
+        print("Payback")
+
+        hits = 1
+        r = random.random()
+
+        if r < 0.15:
+            hits = 3
+        elif r < 0.45:
+            hits = 2
+
+        for i in range(hits):
+            self.Sanity += 5
+
+        if hits == 3:
+            dmg = enemy.MaxHp * 0.13
             enemy.Hp -= dmg
+            print(f"Combo finisher! Dealt {dmg} damage")
 
-            print(f"Maruzen dealt {dmg} damage!")
+    def enraged_skill_1(self, enemy):
 
+        print("Manipulation")
 
-    def skill_3(self):
+        chance = 0.05 * self.turn_counter
 
-        print("Maruzen used Skill 3!")
+        if random.random() < chance:
+            print("Enemy surrendered!")
+            enemy.Hp = 0
+        else:
+            print("Failed!")
 
-        while True:
+    def enraged_skill_2(self, enemy):
 
-            try:
+        print("Death wish")
 
-                choice = int(input("""
-Predict enemy move
-1 Basic
-2 Skill1
-3 Skill2
-4 Skill3
-> """))
+        dmg = 30 + ((100 - self.Sanity) / 5)
+        enemy.Hp -= dmg
+        self.Sanity -= 10
 
-                if choice in [1,2,3,4]:
-                    break
+    def enraged_skill_3(self, enemy):
 
-            except:
-                pass
+        print("System sabotage")
+        enemy.add_debuff("Sabotage", 2)
 
-        return choice
+    # ==========================
 
-
-    def enraged(self):
-
-        if self.Sanity <= 50:
-
-            if self.Form != "enraged":
-                print("Maruzen entered ENRAGED mode!")
-
-            self.Form = "enraged"
-            return True
-
-        self.Form = "normal"
-        return False
-
-    def skill1_cd(self):
-         return 2
-
-    def skill2_cd(self):
-         return 5
-
-    def skill3_cd(self):
-        return 4
+    def get_skill_cd(self, move):
+        if move == 2:
+            return 2
+        if move == 3:
+            return 5
+        if move == 4:
+            return 4
+        return 0
 
     def stats(self):
-
-        return f"{self.Name} | HP:{self.Hp} | Sanity:{self.Sanity}"
+        return f"{self.Name} | HP:{self.Hp} | Sanity:{self.Sanity} | Form:{self.Form}"
