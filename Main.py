@@ -1,4 +1,6 @@
 from Maruzensky import Maruzen
+from Giga import giga
+from Characters import Character
 
 
 # ===============================
@@ -17,7 +19,7 @@ Choose a character for Player 1
 5. Trish
 6. Julian
 7. Icanfixher
-8. Lolicon
+8. SeanJii
 9. Taracoffee
 10. CollectorBaddie
 11. Igop                                  
@@ -72,7 +74,7 @@ Choose a character for Player 2
 5. Trish
 6. Julian
 7. Icanfixher
-8. Lolicon
+8. SeanJii
 9. Taracoffee
 10. CollectorBaddie
 11. Igop                                                
@@ -170,7 +172,13 @@ def battle(player_1, player_2, choice):
     p2_cd2 = player_2.skill2_cd()
     p2_cd3 = player_2.skill3_cd()
 
-
+    #=============================
+    # GIGA EXCLUSIVE
+    #=============================
+    def giga_ba(player, enemy):
+        if giga.basic_attack():
+            giga.add_buff(player, 1)
+            player.Atk *= 2
     # ==============================
     # MARUZEN PREDICTION SYSTEM
     # ==============================
