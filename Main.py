@@ -17,7 +17,7 @@ Choose a character for Player 1
 3. Jexikun
 4. Leah
 5. Trish
-6. Julian
+6. JK
 7. Icanfixher
 8. SeanJii
 9. Taracoffee
@@ -72,7 +72,7 @@ Choose a character for Player 2
 3. Jexikun
 4. Leah
 5. Trish
-6. Julian
+6. JK
 7. Icanfixher
 8. SeanJii
 9. Taracoffee
