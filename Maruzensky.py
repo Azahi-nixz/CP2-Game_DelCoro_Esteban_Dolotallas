@@ -38,7 +38,7 @@ class Maruzen(Character):
     # PASSIVE
     # ==========================
 
-    def take_damage(self, dmg, enemy=None):
+    def take_damage(self, dmg, enemy):
 
         if self.has_buff("Invincible"):
             print(f"{self.Name} is invincible! No damage taken!")
@@ -131,18 +131,10 @@ class Maruzen(Character):
         if self.is_enraged():
             return self.enraged_skill_3(enemy)
 
-        print("Unreal calculation")
-
-        guess = int(input("Predict enemy move: 1. Basic Attack | 2. Skill 1 | 3. Skill 2 | 4. Skill 3 "))
-        actual = int(input("Enemy move: 1. Basic Attack | 2. Skill 1 | 3. Skill 2 | 4. Skill 3 "))
-
-        if guess == actual:
-            enemy.Hp -= self.last_damage_taken
-            print("Prediction success!")
-            self.Sanity -= 20
-        else:
-            self.Sanity -= 40
-            print("Prediction failed!")
+        print("Sanity implosion!")
+        dmg = self.Sanity / 2
+        enemy.take_damage(dmg, self)
+        self.Sanity -= dmg
 
     # ==========================
     # ENRAGED FORM
