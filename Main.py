@@ -1,5 +1,6 @@
 
 from Maruzensky import Maruzen
+from Zen import Zen
 def menu():
 
     while True:
@@ -175,6 +176,7 @@ def battle(p1, p2):
         current.reduce_cooldowns()
 
         current.end_turn_checks()
+        current.reduce_effects()
 
         current.first_turn = False
 
@@ -194,9 +196,13 @@ def main():
 
     if choice[0] == 1:
         p1 = Maruzen()
+    if choice[0] == 2:
+        p1 = Zen()
 
     if choice[1] == 1:
         p2 = Maruzen()
+    if choice[1] == 2:
+        p2 = Zen()
 
     print(f"\nPlayer 1 chose {p1.Name}")
     print(f"Player 2 chose {p2.Name}")

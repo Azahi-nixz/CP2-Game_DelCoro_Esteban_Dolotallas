@@ -5,7 +5,7 @@ from Characters import Character
 class Maruzen(Character):
 
     def __init__(self):
-        super().__init__("Maruzen", 30, 0, 0, 100, 30, 70, 0)
+        super().__init__("Maruzen", 30, 0, 0, 100, 30, 0, 0)
 
         self.skills = {
             1: self.basic_attack,
@@ -44,7 +44,6 @@ class Maruzen(Character):
             print(f"{self.Name} is invincible! No damage taken!")
             return
 
-        # first turn instant kill immunity
         if self.first_turn and dmg >= self.Hp:
             print("Immune to instant kill on first turn!")
             dmg = self.Hp - 1
