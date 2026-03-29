@@ -121,6 +121,15 @@ Choose a character for Player 2
 
     return [choice_one, choice_two]
 
+   def interface():
+    choice = int(input("""
+1. 1 Player
+2. 2 Player
+3. Guides
+4. Exit
+Choose an option: 
+"""))
+    return choice
 
 # =====================================
 # BATTLE SYSTEM
