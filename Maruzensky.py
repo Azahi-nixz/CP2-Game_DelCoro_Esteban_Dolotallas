@@ -5,7 +5,7 @@ from Characters import Character
 class Maruzen(Character):
 
     def __init__(self):
-        super().__init__("Maruzen", 30, 0, 0, 100, 30, 0, 0)
+        super().__init__("Maruzen", 30, 0, 0, 100, 100, 0, 0)
 
         self.skills = {
             1: self.basic_attack,

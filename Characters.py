@@ -1,3 +1,4 @@
+import random
 
 
 class Character:
@@ -88,7 +89,17 @@ class Character:
         if self.has_debuff("Sabotage") and move != 1:
             print("You are sabotaged! Only Basic Attack allowed!")
             return 1
+        if self.has_debuff("Poison"):
+            enemy.take_damage(5 , enemy)
         return move
 
 
 
+
+    def check_hit(self, enemy):
+        r = random.random()
+        chance = self.Accuracy / (enemy.Spd + self.Accuracy)
+        if chance >= r:
+            return True
+        else:
+            return False
