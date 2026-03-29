@@ -1,9 +1,11 @@
+
+
 class Character:
 
     def __init__(self, Name, Hp, Atk, Mana, Sanity, Spd, Acc, Eff):
-
         self.Name = Name
         self.Hp = Hp
+        self.MaxHp = Hp
         self.Atk = Atk
         self.Mana = Mana
         self.Sanity = Sanity
@@ -12,24 +14,32 @@ class Character:
         self.Eff = Eff
 
         self.Form = "normal"
+        self.turn_counter = 0
 
-        # status effects
         self.buffs = {}
         self.debuffs = {}
+
+        self.skills = {}
+        self.cooldowns = {}
 
     def is_alive(self):
         return self.Hp > 0
 
-    def has_mana(self):
-        return self.Mana > 0
+    def use_skill(self, move, enemy):
 
-    def has_sanity(self):
-        return self.Sanity > 0
+        if self.cooldowns.get(move, 0) > 0:
+            print("Skill is on cooldown!")
+            return True
 
+        result = self.skills[move](enemy)
 
-    # ==========================
-    # BUFF / DEBUFF MANAGEMENT
-    # ==========================
+        self.cooldowns[move] = self.get_skill_cd(move)
+
+        return result
+
+    def reduce_cooldowns(self):
+        for k in self.cooldowns:
+            self.cooldowns[k] = max(self.cooldowns[k] - 1, 0)
 
     def add_buff(self, name, duration):
         self.buffs[name] = duration
@@ -39,9 +49,7 @@ class Character:
         self.debuffs[name] = duration
         print(f"{self.Name} received debuff: {name} ({duration} turns)")
 
-
     def reduce_effects(self):
-
         expired = []
 
         for buff in self.buffs:
@@ -64,23 +72,23 @@ class Character:
             del self.debuffs[debuff]
             print(f"{self.Name}'s {debuff} debuff expired")
 
-
     def has_debuff(self, name):
         return name in self.debuffs
 
     def has_buff(self, name):
         return name in self.buffs
 
-
     def status(self):
         return f"Buffs: {list(self.buffs.keys())} | Debuffs: {list(self.debuffs.keys())}"
 
+    def get_skill_cd(self, move):
+        return 0
 
-    def is_cooldown(self, cd):
-        if cd != 0:
-            return f"Cooldown: {cd}"
-        return "Ready!"
-    
-    def check_hit(self):
-        chance = self.Atk / (self.Atk + self.Spd) 
-        return random.random() < chance
+    def debuff_checker(self, move, enemy):
+        if self.has_debuff("Sabotage") and move != 1:
+            print("You are sabotaged! Only Basic Attack allowed!")
+            return 1
+        return move
+
+
+
