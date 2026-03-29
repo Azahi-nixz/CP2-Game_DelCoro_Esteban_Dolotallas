@@ -1,4 +1,4 @@
-import random
+
 
 from Characters import Character
 
@@ -6,7 +6,7 @@ from Characters import Character
 class Giga(Character):
 
     def __init__(self):
-        super().__init__("Giga", 100, 30, 0, 0, 50, 80, 0)
+        super().__init__("Giga", 100, 30, 0, 0, 20, 80, 0)
 
         self.skills = {
             1: self.basic_attack,
@@ -57,8 +57,6 @@ class Giga(Character):
 
         print(f"{self.Name} is immune to damage for 2 turns!")
 
-        return True
-
 
     def skill_3(self, enemy):
         print("Giga used Skill 3!")
@@ -66,10 +64,8 @@ class Giga(Character):
 
         print(f"{self.Name}'s stats are doubled for 2 turns!")
 
-        return True
-
     def end_turn_checks(self):
-        while "Enhanced" in self.buffs:
+        if "Enhanced" in self.buffs:
             self.Atk *= 2
             self.Hp *= 2
 
@@ -81,3 +77,9 @@ class Giga(Character):
         if move == 4:
             return 3
         return 0
+
+    def check_transformation(self):
+        pass
+
+    def stats(self):
+        return f"{self.Name} | HP:{self.Hp} | Form:{self.Form}"

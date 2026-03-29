@@ -180,7 +180,7 @@ def main():
     print(f"\nPlayer 1 chose {p1.Name}")
     print(f"Player 2 chose {p2.Name}")
 
-    battle(p1, p2,)
+    battle(p1, p2)
 
 
 if __name__ == "__main__":
