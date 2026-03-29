@@ -6,7 +6,7 @@ from Characters import Character
 class Giga (Character):
 
     def __init__(self):
-        super().__init__("Giga", 100, 30, 0, 0, 50, 80, 0)
+        super().__init__("Giga", 100, 15, 0, 0, 70, 70, 0)
 
         self.skills = {
             1: self.basic_attack,
@@ -71,7 +71,7 @@ def skill_3(self):
     self.Accuracy *= 2
 
     # Set duration
-    self.skill3_turns = 4
+    self.skill3_turns = 3
 
     print(f"{self.Name}'s stats are doubled for 4 turns!")
 
@@ -100,4 +100,4 @@ def skill_cd (self, move):
     if move == 3:
         return 2
     if move == 4:
-        return 7
+        return 9
