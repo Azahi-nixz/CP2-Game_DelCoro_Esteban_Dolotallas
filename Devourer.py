@@ -32,8 +32,10 @@ class Devourer(Character):
     def skill_2(self, enemy):
         if self.check_hit(enemy):
             print("Lethal claw!")
-            enemy.take_damage(20, enemy)
-            enemy.add_debuff("Poison" , 2)
+            dmg = 20
+            enemy.take_damage(dmg, enemy)
+            print(f"{enemy.Name} took {dmg} damage!")
+            enemy.add_debuff("Bleeding" , 2)
         else: print(f"{enemy.Name} evaded your attack!")
 
     def skill_3(self, enemy):

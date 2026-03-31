@@ -4,7 +4,7 @@ from Characters import Character
 
 class JAD(Character):
     def __init__(self):
-        super().__init__("Zen", 40, 60, 0, 0, 100, 100, 0)
+        super().__init__("J.A.D.", 40, 60, 0, 0, 100, 100, 0)
 
         self.skills = {
             1: self.basic_attack,
@@ -105,11 +105,11 @@ class JAD(Character):
 
     def get_skill_cd(self, move):
         if move == 2:
-            return 1
+            return 2
         if move == 3:
             return 3
         if move == 4:
-            return 3
+            return 4
         return 0
 
     def stats(self):

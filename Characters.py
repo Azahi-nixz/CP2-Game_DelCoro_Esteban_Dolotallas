@@ -47,8 +47,11 @@ class Character:
         print(f"{self.Name} gained buff: {name} ({duration} turns)")
 
     def add_debuff(self, name, duration):
-        self.debuffs[name] = duration
-        print(f"{self.Name} received debuff: {name} ({duration} turns)")
+        if "S.E Immunity" not in self.debuffs[name]:
+            self.debuffs[name] = duration
+            print(f"{self.Name} received debuff: {name} ({duration} turns)")
+        else:
+            print(f"{self.Name} has Status effect immunity! Cannot inflict debuff!")
 
     def reduce_effects(self):
         expired = []
@@ -89,8 +92,9 @@ class Character:
         if self.has_debuff("Sabotage") and move != 1:
             print("You are sabotaged! Only Basic Attack allowed!")
             return 1
-        if self.has_debuff("Poison"):
-            enemy.take_damage(5 , enemy)
+        if self.has_debuff("Bleeding"):
+            bleeding = enemy.Hp * 0.2
+            enemy.take_damage(bleeding , enemy)
         return move
 
 

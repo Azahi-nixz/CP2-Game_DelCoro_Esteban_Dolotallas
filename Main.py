@@ -1,3 +1,5 @@
+
+
 from Devourer import Devourer
 from Maruzensky import Maruzen
 from Zen import Zen
@@ -143,6 +145,7 @@ def battle(p1, p2):
 
     print("\n" + "="*40)
 
+
     if p1.is_alive():
         print("PLAYER 1 WINS!")
     else:
@@ -162,9 +165,9 @@ def main():
         p1 = Zen()
     if choice[0] == 3:
         p1 = Devourer()
-    if choice[1] == 4:
+    if choice[0] == 4:
         p1 = JAD()
-    if choice[1] == 5:
+    if choice[0] == 5:
         p1 = Giga()
 
     if choice[1] == 1:
