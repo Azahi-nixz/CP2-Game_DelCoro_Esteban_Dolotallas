@@ -1,10 +1,9 @@
-
-
 from Devourer import Devourer
 from Maruzensky import Maruzen
 from Zen import Zen
 from Giga import Giga
 from JAD import JAD
+from Minos import Minos
 
 def interface():
     choice = int(input("""
@@ -28,7 +27,7 @@ Choose a character for Player 1
 3. Devourer
 4. J.A.D.
 5. Giga
-6. JK
+6. Minos
 7. Icanfixher
 8. SeanJii
 9. Taracoffee
@@ -53,7 +52,7 @@ Choose a character for Player 2
 3. Devourer
 4. J.A.D.
 5. Giga
-6. JK
+6. Minos
 7. Icanfixher
 8. SeanJii
 9. Taracoffee
@@ -169,6 +168,8 @@ def main():
         p1 = JAD()
     if choice[0] == 5:
         p1 = Giga()
+    if choice[0] == 6:
+        p1 = Minos()
 
     if choice[1] == 1:
         p2 = Maruzen()
@@ -180,6 +181,9 @@ def main():
         p2 = JAD()
     if choice[1] == 5:
         p2 = Giga()
+    if choice[1] == 6:
+        p2 = Minos()
+
     print(f"\nPlayer 1 chose {p1.Name}")
     print(f"Player 2 chose {p2.Name}")
 

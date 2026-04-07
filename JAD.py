@@ -4,7 +4,7 @@ from Characters import Character
 
 class JAD(Character):
     def __init__(self):
-        super().__init__("J.A.D.", 40, 60, 0, 0, 100, 100, 0)
+        super().__init__("J.A.D.", 40, 60, 0, 0, 90, 80, 0)
 
         self.skills = {
             1: self.basic_attack,

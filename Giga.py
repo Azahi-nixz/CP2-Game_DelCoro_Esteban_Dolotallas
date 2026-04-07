@@ -6,7 +6,7 @@ from Characters import Character
 class Giga(Character):
 
     def __init__(self):
-        super().__init__("Giga", 100, 30, 0, 0, 20, 80, 0)
+        super().__init__("Giga", 100, 20, 0, 0, 20, 70, 0)
 
         self.skills = {
             1: self.basic_attack,
@@ -71,11 +71,11 @@ class Giga(Character):
 
     def get_skill_cd(self, move):
         if move == 2:
-            return 1
+            return 3
         if move == 3:
             return 3
         if move == 4:
-            return 3
+            return 4
         return 0
 
     def check_transformation(self):

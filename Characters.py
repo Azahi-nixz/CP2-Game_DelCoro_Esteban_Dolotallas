@@ -47,7 +47,7 @@ class Character:
         print(f"{self.Name} gained buff: {name} ({duration} turns)")
 
     def add_debuff(self, name, duration):
-        if "S.E Immunity" not in self.debuffs[name]:
+        if "S.E Immunity" not in self.debuffs:
             self.debuffs[name] = duration
             print(f"{self.Name} received debuff: {name} ({duration} turns)")
         else:

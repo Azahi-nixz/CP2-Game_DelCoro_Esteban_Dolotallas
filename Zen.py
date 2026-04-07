@@ -76,7 +76,6 @@ class Zen(Character):
             elif self.Form == "Blood rage":
                 dmg = self.Atk
                 enemy.take_damage(dmg, enemy)
-                self.blood_rage += dmg
                 print("Zen used Blood rage!")
         else: print(f"{enemy.Name} evaded your attack!")
 
@@ -93,5 +92,10 @@ class Zen(Character):
         return f"{self.Name} | HP:{self.Hp} | Blood Rage:{self.blood_rage} | Form:{self.Form}"
 
     def end_turn_checks(self):
-        pass
+        while self.Form == "Blood rage":
+            self.turn_counter += 1
+            if self.turn_counter == 4:
+                self.Form = "normal"
+                self.blood_rage /= 2
+                self.turn_counter = 0
 
