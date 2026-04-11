@@ -107,7 +107,7 @@ class JAD(Character):
         if move == 2:
             return 2
         if move == 3:
-            return 3
+            return 5
         if move == 4:
             return 4
         return 0
