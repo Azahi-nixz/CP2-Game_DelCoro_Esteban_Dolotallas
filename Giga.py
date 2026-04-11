@@ -1,12 +1,10 @@
-import random
-
 from Characters import Character
 
 
 class Giga(Character):
 
     def __init__(self):
-        super().__init__("Giga", 180, 20, 0, 0, 50, 70, 0)
+        super().__init__("Giga", 100, 30, 0, 0, 20, 80, 0)
 
         self.skills = {
             1: self.basic_attack,
@@ -20,10 +18,13 @@ class Giga(Character):
         if self.has_buff("Invincible"):
             print(f"{self.Name} is invincible! No damage taken!")
             return
+        
 
-        self.Hp -= dmg
+        dmg = dmg * 0.8 
+        reflect = dmg * 0.2
         print(f"{self.Name} took {dmg} damage!")
-
+        print (f"Reflected damage{reflect}")
+        enemy.take_damage(reflect,enemy)
 
     def basic_attack(self, enemy):
         if self.check_hit(enemy):
@@ -42,7 +43,7 @@ class Giga(Character):
         else:
              print(f"{enemy.Name} evaded your attack!")
 
-
+    
     def skill_1(self, enemy):
         print(" Giga used Skill 1! ")
         self.add_buff("Double Damage", 1)
@@ -51,26 +52,21 @@ class Giga(Character):
     def skill_2(self, enemy):
         print("Giga used Skill 2!")
 
-        # GIGA TANK
+        # GIGA TURN
         # Negates damage for 2 turns
         self.add_buff("Invincible", 2)
 
         print(f"{self.Name} is immune to damage for 2 turns!")
 
-        return True
-
 
     def skill_3(self, enemy):
         print("Giga used Skill 3!")
-        # NINJA THIEVES
         self.add_buff("Enhanced", 2)
 
         print(f"{self.Name}'s stats are doubled for 2 turns!")
 
-        return True
-
     def end_turn_checks(self):
-        while "Enhanced" in self.buffs:
+        if "Enhanced" in self.buffs:
             self.Atk *= 2
             self.Hp *= 2
 
@@ -82,3 +78,9 @@ class Giga(Character):
         if move == 4:
             return 3
         return 0
+
+    def check_transformation(self):
+        pass
+
+    def stats(self):
+        return f"{self.Name} | HP:{self.Hp} | Form:{self.Form}"
