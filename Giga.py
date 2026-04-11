@@ -20,10 +20,13 @@ class Giga(Character):
         if self.has_buff("Invincible"):
             print(f"{self.Name} is invincible! No damage taken!")
             return
+        
 
-        self.Hp -= dmg
+        dmg = dmg * 0.8 
+        reflect = dmg * 0.2
         print(f"{self.Name} took {dmg} damage!")
-
+        print (f"Reflected damage{reflect}")
+        enemy.take_damage(reflect,enemy)
 
     def basic_attack(self, enemy):
         if self.check_hit(enemy):
@@ -42,7 +45,7 @@ class Giga(Character):
         else:
              print(f"{enemy.Name} evaded your attack!")
 
-
+    
     def skill_1(self, enemy):
         print(" Giga used Skill 1! ")
         self.add_buff("Double Damage", 1)
@@ -71,11 +74,11 @@ class Giga(Character):
 
     def get_skill_cd(self, move):
         if move == 2:
-            return 3
+            return 1
         if move == 3:
             return 3
         if move == 4:
-            return 4
+            return 3
         return 0
 
     def check_transformation(self):
