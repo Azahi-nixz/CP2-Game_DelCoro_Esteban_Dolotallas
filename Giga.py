@@ -1,10 +1,12 @@
+
+
 from Characters import Character
 
 
 class Giga(Character):
 
     def __init__(self):
-        super().__init__("Giga", 100, 30, 0, 0, 20, 80, 0)
+        super().__init__("Giga", 100, 20, 0, 0, 20, 70, 0)
 
         self.skills = {
             1: self.basic_attack,
