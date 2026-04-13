@@ -92,9 +92,10 @@ class Character:
         if self.has_debuff("Sabotage") and move != 1:
             print("You are sabotaged! Only Basic Attack allowed!")
             return 1
-        if self.has_debuff("Bleeding"):
-            bleeding = enemy.Hp * 0.2
-            enemy.take_damage(bleeding , enemy)
+        if enemy.has_debuff("Bleeding"):
+            bleeding = enemy.MaxHp * 0.2
+            print(f"{enemy.Name} is bleeding!")
+            enemy.take_damage(bleeding, self)
         return move
 
 

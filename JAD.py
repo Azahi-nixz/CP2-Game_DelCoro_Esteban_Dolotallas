@@ -35,25 +35,33 @@ class JAD(Character):
 
         print("Cancelled all ongoing enemy buffs and self debuffs.")
 
-
     def skill_2(self, enemy):
         if self.Form == "Gun":
             print("Long shot!")
             if self.ammo < 2:
-                "Insufficient ammo! Used knife skill 1 instead!"
+                print("Insufficient ammo! Used knife skill 1 instead!")
                 print("Backstab")
                 dmg = self.Atk * 0.4
-                enemy.take_damage(dmg, enemy)
+                enemy.take_damage(dmg, self)
+                return
+
             if self.is_headshot() and self.check_hit(enemy):
                 self.ammo -= 2
                 hp = enemy.Hp
                 dmg = hp - 1
-                enemy.take_damage(dmg, enemy)
-            else: print(f"{enemy.Name} evaded your attack!")
+                enemy.take_damage(dmg, self)
+            else:
+                print(f"{enemy.Name} evaded your attack!")
         elif self.Form == "Hand":
             print("Backstab")
             dmg = self.Atk * 0.4
-            enemy.take_damage(dmg, enemy)
+            enemy.take_damage(dmg, self)
+
+    def end_turn_checks(self):
+        if self.ammo <= 0:
+            self.Form = "Hand"
+
+        self.ammo = min(self.ammo + 1, 3)
 
     def skill_3(self, enemy):
             if self.Form == "Gun":
@@ -107,7 +115,7 @@ class JAD(Character):
         if move == 2:
             return 2
         if move == 3:
-            return 5
+            return 3
         if move == 4:
             return 4
         return 0
@@ -115,11 +123,5 @@ class JAD(Character):
     def stats(self):
         return f"{self.Name} | HP:{self.Hp} | Ammunition: {self.ammo} | Form:{self.Form}"
 
-    def end_turn_checks(self):
-        self.ammo = min(self.ammo + 1, 3)
-        if self.ammo < 0:
-            self.ammo = 0
-        if self.ammo == 0:
-            self.Form = "Hand"
 
 

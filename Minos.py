@@ -50,27 +50,39 @@ class Minos(Character):
 
     def basic_attack(self, enemy):
         r = random.randint(1, 10000)
-        if r <= 10 * self.luck:
-            enemy.take_damage(999, enemy)
+        threshold = 10 * self.luck
+
+        if r <= threshold:
+            enemy.take_damage(999, self)
             print("LUCKY! DEALT 999 dmg!")
-        if 400 >= r > 10 * self.luck:
-            enemy.take_damage(40, enemy)
-        if 900 >= r > 400:
-            enemy.take_damage(35, enemy)
-        if 1400 >= r > 900:
-            enemy.take_damage(35, enemy)
-        if 1900 >= r > 1400:
-            enemy.take_damage(25, enemy)
-        if 3400 >= r > 1900:
-            enemy.take_damage(20, enemy)
-        if 5000 >= r > 3400:
-            enemy.take_damage(15, enemy)
-        if 7000 >= r > 5000:
-            enemy.take_damage(10, enemy)
-        if 8500 >= r > 7000:
-            enemy.take_damage(5, enemy)
-        if 10000 >= r > 8500:
-            enemy.take_damage(1, enemy)
+        elif r <= 400:
+            enemy.take_damage(40, self)
+        elif r <= 900:
+            enemy.take_damage(35, self)
+        elif r <= 1400:
+            enemy.take_damage(35, self)
+        elif r <= 1900:
+            enemy.take_damage(25, self)
+        elif r <= 3400:
+            enemy.take_damage(20, self)
+        elif r <= 5000:
+            enemy.take_damage(15, self)
+        elif r <= 7000:
+            enemy.take_damage(10, self)
+        elif r <= 8500:
+            enemy.take_damage(5, self)
+        elif r <= 10000:
+            enemy.take_damage(1, self)
+
+    def end_turn_checks(self):
+        if self.has_buff("Health Regen"):
+            heal = self.MaxHp * 0.1
+            self.Hp += heal
+            print(f"Health regen activated! Healed {heal} HP!")
+
+        if self.turn_counter > 0 and self.turn_counter % 5 == 0:
+            self.passive()
+
     def get_skill_cd(self, move):
         if move == 2:
             return 2
@@ -83,15 +95,6 @@ class Minos(Character):
     def stats(self):
         return f"{self.Name} | HP:{self.Hp}"
 
-    def end_turn_checks(self):
-        if self.has_buff("Health Regen"):
-            heal = self.Hp * 10
-            self.Hp += heal
-            print("Health regen activated! Healed 10 HP!")
-
-        self.turn_counter += 1
-        if self.turn_counter % 5 == 0:
-            self.passive()
     def passive(self):
         r = random.random()
         if r < 0.5:
