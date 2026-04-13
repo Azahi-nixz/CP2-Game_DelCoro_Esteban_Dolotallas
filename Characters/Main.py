@@ -4,7 +4,7 @@ from Zen import Zen
 from Giga import Giga
 from JAD import JAD
 from Minos import Minos
-
+from Guides import guide
 def interface():
     choice = int(input("""
 1. 1 Player
@@ -17,7 +17,6 @@ Choose an option:
 
 
 def menu():
-
     while True:
         try:
             choice_one = int(input("""
@@ -28,18 +27,11 @@ Choose a character for Player 1
 4. J.A.D.
 5. Giga
 6. Minos
-7. Icanfixher
-8. SeanJii
-9. Taracoffee
-10. CollectorBaddie
-11. Igop                                  
 > """))
-
-            if choice_one in [1,2,3,4,5,6,7,8,9, 10, 11]:
+            if choice_one in [1, 2, 3, 4, 5, 6]:
                 break
             else:
                 print("Invalid choice.")
-
         except ValueError:
             print("Enter a number.")
 
@@ -53,18 +45,11 @@ Choose a character for Player 2
 4. J.A.D.
 5. Giga
 6. Minos
-7. Icanfixher
-8. SeanJii
-9. Taracoffee
-10. CollectorBaddie
-11. Igop                                                
 > """))
-
-            if choice_two in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]:
+            if choice_two in [1, 2, 3, 4, 5, 6]:
                 break
             else:
                 print("Invalid choice.")
-
         except ValueError:
             print("Enter a number.")
 
@@ -155,39 +140,49 @@ def battle(p1, p2):
 #===========================================
 
 def main():
+    c = interface()
 
-    choice = menu()
+    if c == 2:
+        choice = menu()
 
-    if choice[0] == 1:
-        p1 = Maruzen()
-    if choice[0] == 2:
-        p1 = Zen()
-    if choice[0] == 3:
-        p1 = Devourer()
-    if choice[0] == 4:
-        p1 = JAD()
-    if choice[0] == 5:
-        p1 = Giga()
-    if choice[0] == 6:
-        p1 = Minos()
+        if choice[0] == 1:
+            p1 = Maruzen()
+        if choice[0] == 2:
+            p1 = Zen()
+        if choice[0] == 3:
+            p1 = Devourer()
+        if choice[0] == 4:
+            p1 = JAD()
+        if choice[0] == 5:
+            p1 = Giga()
+        if choice[0] == 6:
+            p1 = Minos()
 
-    if choice[1] == 1:
-        p2 = Maruzen()
-    if choice[1] == 2:
-        p2 = Zen()
-    if choice[1] == 3:
-        p2 = Devourer()
-    if choice[1] == 4:
-        p2 = JAD()
-    if choice[1] == 5:
-        p2 = Giga()
-    if choice[1] == 6:
-        p2 = Minos()
+        if choice[1] == 1:
+            p2 = Maruzen()
+        if choice[1] == 2:
+            p2 = Zen()
+        if choice[1] == 3:
+            p2 = Devourer()
+        if choice[1] == 4:
+            p2 = JAD()
+        if choice[1] == 5:
+            p2 = Giga()
+        if choice[1] == 6:
+            p2 = Minos()
 
-    print(f"\nPlayer 1 chose {p1.Name}")
-    print(f"Player 2 chose {p2.Name}")
+        print(f"\nPlayer 1 chose {p1.Name}")
+        print(f"Player 2 chose {p2.Name}")
 
-    battle(p1, p2)
+        battle(p1, p2)
+
+    if c == 3:
+        guide()
+        interface()
+
+    if c == 4:
+        print("Exiting...")
+
 
 
 if __name__ == "__main__":
