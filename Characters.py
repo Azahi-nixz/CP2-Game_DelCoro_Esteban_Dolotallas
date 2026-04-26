@@ -92,13 +92,11 @@ class Character:
         if self.has_debuff("Sabotage") and move != 1:
             print("You are sabotaged! Only Basic Attack allowed!")
             return 1
-        if self.has_debuff("Bleeding"):
-            bleeding = enemy.Hp * 0.2
-            enemy.take_damage(bleeding , enemy)
+        if enemy.has_debuff("Bleeding"):
+            bleeding = enemy.MaxHp * 0.2
+            print(f"{enemy.Name} is bleeding!")
+            enemy.take_damage(bleeding, self)
         return move
-
-
-
 
     def check_hit(self, enemy):
         r = random.random()
@@ -107,3 +105,12 @@ class Character:
             return True
         else:
             return False
+        
+    def use_skill(self, choice, enemy):
+        if self.has_buff("Basic Only") and choice != 1:
+            print(f"{self.Name} can only used Basic Attack!")
+            self.basic_attack (enemy)
+        else:
+            self.skills[choice](enemy)
+
+           
