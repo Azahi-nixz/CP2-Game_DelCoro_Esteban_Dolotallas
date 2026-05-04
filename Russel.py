@@ -13,8 +13,11 @@ class Russel (Character):
         }
 
     def take_damage (self, dmg, enemy):
-        reduce = dmg * 0.8
-        self.hp -= reduce 
+        final_damage = dmg * 0.8
+        self.Hp -= final_damage 
+
+        print(f"{self.Name} took {final_damage} damage!!")
+
         if self.has_buff("Sleeping"):
            reduce_damage *= 0.85
            print(f"{self.Name} reduce the damage while sleeping!")
@@ -28,7 +31,18 @@ class Russel (Character):
             self.Hp -= reduce_damage
 
             print(f"{self.Name} took {reduce_damage} damage!!")
-                  
+
+        if self.Hp <= self.MaxHp * 0.3:
+            if not self.has_buff("Regen"):
+
+                self.add_buff("Regen", 3)
+            print(f"{self.Name} is below 30% HP and gains regen!")
+
+            heal = self.MaxHp * 0.05
+            self.Hp = min(self.Hp + heal, self.MaxHp)
+
+            print(f"{self.Name} heals {heal} HP!")
+           
     def basic_attack(self, enemy):
         print(f"{self.Name} used Basic Attack!")
         enemy.take_damage (self.Atk, self)
@@ -37,7 +51,7 @@ class Russel (Character):
         print("Russel used Skill 1!")
         
         self.add_buff("Sleeping", 1)
-        Max =self.MaxHp * 0.3
+        Max = self.MaxHp * 0.3
         self.Hp += Max
 
         if self.Hp > self.MaxHp:
@@ -54,7 +68,14 @@ class Russel (Character):
         enemy.add_buff ("Vulnerable", 2)
     
     def skill_3 (self, enemy):
-        pass
+        print ("Russel used Skill 3!!")
+
+        if self.Hp <= 0:
+            self.Hp = self.MaxHp * 1
+            print(f"{self.Name} revives with {self.Hp} HP!!")
+        else:
+            print ("Skill can be only used when defeated")     
+
 
     def get_skill_cd(self, move):
         if move == 2:
