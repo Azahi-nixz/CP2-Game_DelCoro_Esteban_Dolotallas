@@ -1,0 +1,151 @@
+Character - Devourer
+A character that can heal, tank, and transform into another beast that gains immortality!.
+
+//Skillset
+Passive: Iron Will
+"The longer it lasts, the stronger I get."
+
+Devourer starts with a low hp. But every 2 turns, Devourer's HP increases its HP capacity to 5 more HP. The maximum HP capacity is 150.
+
+Skill 1: Lemme Suck Em'
+"Such fresh blood..."
+Devourer sucks his opponent's blood. The heal he gets is 10% of the opponent's HP. Higher HP means higher heal, lower HP means lower heal.
+(4 turn cd)
+
+Skill 2: Lethal Claw
+"I still thirst for more."
+Devourer uses his claw to slash his enemy. Dealing up to 20 damage and inflicts a poison to the opponent that deals 5 damage per turn. The poison lasts up to 2 turns.
+(3 turns cd)
+
+Skill 3: Immortality
+"I have finally achieved it..!"
+Devourer becomes invincible for 1 turn. Nothing more, nothing less. 
+(Skill cd 6 turns)
+
+
+
+Character - Giga
+A character that has damage, immunity, and buffs all the stats within the next turn. Heavy hitter type of character that is able to smash and hit enemies.
+
+//Skillset
+Passive: Giga Vengeance
+Since the nigga is slow the body of giga evolve and can relfect 20% damage taken to the enemy.
+
+Skill 1: Giga Smash 
+Giga enhance its fist and activates double damage for the next turn.
+(3 turn cd)
+
+Skill 2: Giga Turn
+Due to its heavy body, his body evolves and negates damage for a short turn of time.
+(3 turn cd)
+
+Skill 3: Giga turns Nigga
+All stats have been double for a short turn of time. Enhancing the attacks and all.
+(4 turn cd)
+
+
+Character - JAD
+A character that can snipe people, whether people or enemies. This character has two weapons: the knife and gun.
+
+//Skillset
+Passive: Stealth
+
+Everytime he uses a skill gain stealth for 1 turn. Stealth raise atk and speed
+
+JAD uses two weapons: Hand gun and knife. If his ammunition was used, switch to knife mode. Ammunition recharge 2 per turn
+
+Skill 1: Gunho
+This skill can cancel ongoing skill for enemy (buff and debuff). CD: 5 turns
+
+Skill 2: Longshot: uses 2 ammunition 
+
+Uses his gun to snipe target, dealing dmg equal to 60% of its attack. There’s a 10 percent chance of inflicting headshot, reducing enemy hp to 1
+
+Knife mode: Backstab
+
+Inflict dmg equal to 40% of atk. Cannot be blocked
+
+Skill 3: Mist: uses 3 ammunition 
+
+Uses specialized ammunition to inflict blindness to enemy, reducing speed for 100% for 2 turns
+
+Knife mode: Throat cutter
+
+Attempt to execute the enemy. Chance of succession is based on 10% of current accuracy.
+
+Basic attack: 
+Fires a gun, used 1 ammo, dealing 30% of atk as dmg
+
+If no ammo, uses his knife, dealing 20% damage to enemy
+
+
+
+Character - Maruzensky
+Passive: This character doesn’t use mana, instead it uses sanity. (Base 100). If sanity dropped to 30, immediately transform to enraged mode. All skills will change including passive.
+
+For every hit received, sanity will decrease by 10.
+
+This character is also immune to instant kill on the first turn.
+
+Skill 1: Please slap me
+
+Damage received from the last enemy attack will be converted into HP. Uses 20 sanity. Cooldown: 2 turns
+
+Skill 2: Wdym? I’m used to feeling pain…
+
+Grants immunity to physical damage for two turns. Uses 30 sanity. Cool down: 5 turns
+
+Skill 3: Unreal calculation
+
+This character will attempt to guess enemy’s move. (Basic attack or use skill 1 to 3). If guessed correctly, the enemy will receive the damage instead. Cooldown: 4 turns. This move uses 20 sanity and will be doubled if guess is wrong.
+
+
+Basic attack: Why would I fight?
+This character’s basic attack has no damage. Instead, it will be used to recover sanity. There’s a 10% chance of you gaining another turn when used. 
+
+Enraged form:
+
+Passive: Revenge
+
+Every attack it receives will reflect to the attacker, dealing 75% of the original damage.
+
+This character will only receive 25% of the current damage dealt. 
+
+Receive death immunity for two turns. But will have negative HP. This character will die if negative HP did not healed after two turns.
+
+This character will also die if sanity was drained to zero.
+
+
+1st skill: Manipulation 
+
+This character will attempt to manipulate the enemy, making them to immediately surrender. Base chance is 5%. Every turn, the chance will increase to 5%.
+
+2nd skill: Death wish
+
+This character will wish for the user’s downfall, dealing 30 true damege to the enemy. Damage increase based on current sanity. If sanity is smaller, this skill deals more damage. Uses 10 sanity. No cooldown.
+
+
+3rd skill: System sabotage
+
+This skill will make enemy’s move only use basic attack. 2 turns duration. Cooldown: 4 turns
+
+Basic attack: Payback
+This basic attack has no damage. It recovers 5 sanity for every successive hits. (This basic attack can do 3 combos, with 30% chance for 2 combos and 15% chance for 3 combo.) At 3 combos, this character will deal true damage based on 13% of enemy’s max hp.
+
+
+Character - Minos
+
+Passive: “Jackpot! 🤑”
+In the next 5 Turns, become immune to ALL status effects and gain “Health Regen” for the next 5 turns.
+Passive: “Bust! 😔”
+In the next 5 Turns, ALL negative status effects’ duration and effectiveness DOUBLE, and gain “Vulnerability” for the next 5 turns.
+
+Skill 1: “Dunca Tonca”
+CD: 2 turns
+Desc: Gain +5% luck for the next turn.
+Skill 2: “Take it All.”
+CD: 1 turn
+Desc: Perform a coin flip which has a 50/50 chance of either getting Jackpot or Bust.
+Skill 3: “It was Inevitable”
+Accessible after 5 turns, CD: 10 turns
+Desc: Gain Undying and Health Regen for the next 3 turns.

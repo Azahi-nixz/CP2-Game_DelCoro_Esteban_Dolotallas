@@ -92,9 +92,9 @@ class Zen(Character):
         return f"{self.Name} | HP:{self.Hp} | Blood Rage:{self.blood_rage} | Form:{self.Form}"
 
     def end_turn_checks(self):
-        while self.Form == "Blood rage":
+        if self.Form == "Blood rage":
             self.turn_counter += 1
-            if self.turn_counter == 4:
+            if self.turn_counter >= 4:
                 self.Form = "normal"
                 self.blood_rage /= 2
                 self.turn_counter = 0
