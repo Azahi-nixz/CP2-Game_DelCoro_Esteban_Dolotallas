@@ -107,10 +107,14 @@ class Character:
             return False
         
     def use_skill(self, choice, enemy):
+        if choice not in self.skills:
+            print("Invalid Skill Choice")
+            return None
+        
         if self.has_buff("Basic Only") and choice != 1:
             print(f"{self.Name} can only used Basic Attack!")
-            self.basic_attack (enemy)
-        else:
-            self.skills[choice](enemy)
-
+            return self.basic_attack (enemy)
+        
+        return self.skills[choice](enemy)
+        
            
