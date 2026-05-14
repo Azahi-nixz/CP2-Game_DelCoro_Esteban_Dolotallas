@@ -50,7 +50,7 @@ class Zen(Character):
         print("A lost cause....")
         if self.check_hit(enemy):
             dmg = self.Atk * 0.2
-            enemy.take_damage(dmg, enemy)
+            enemy.take_damage(dmg, self)
             self.blood_rage += 40
         else: print(f"{enemy.Name} evaded your attack!")
 
@@ -62,7 +62,7 @@ class Zen(Character):
         print("Death slash!")
         if self.check_hit(enemy):
             dmg = self.Atk
-            enemy.take_damage(dmg, enemy)
+            enemy.take_damage(dmg, self)
             self.blood_rage /= 2
         else:
             print(f"{enemy.Name} evaded your attack!")
@@ -70,12 +70,12 @@ class Zen(Character):
     def basic_attack(self, enemy):
         if self.check_hit(enemy):
             if self.Form == "normal":
-                enemy.take_damage(5 , enemy)
+                enemy.take_damage(5, self)
                 print("Zen used basic attack!")
                 self.blood_rage += 5
             elif self.Form == "Blood rage":
                 dmg = self.Atk
-                enemy.take_damage(dmg, enemy)
+                enemy.take_damage(dmg, self)
                 print("Zen used Blood rage!")
         else: print(f"{enemy.Name} evaded your attack!")
 
@@ -93,9 +93,9 @@ class Zen(Character):
 
     def end_turn_checks(self):
         if self.Form == "Blood rage":
-            self.turn_counter += 1
+            # turn_counter is already incremented in battle(), don't double-count
             if self.turn_counter >= 4:
                 self.Form = "normal"
                 self.blood_rage /= 2
-                self.turn_counter = 0
+                print(f"{self.Name} calmed down. Blood Rage ended.")
 
