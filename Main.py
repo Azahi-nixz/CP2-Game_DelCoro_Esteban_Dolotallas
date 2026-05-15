@@ -4,7 +4,9 @@ from Zen import Zen
 from Giga import Giga
 from JAD import JAD
 from Minos import Minos
+from Pol import Pol
 from Guides import guide
+
 def interface():
     while True:
         try:
@@ -34,8 +36,9 @@ Choose a character for Player 1
 4. J.A.D.
 5. Giga
 6. Minos
+7. Pol
 > """))
-            if choice_one in [1, 2, 3, 4, 5, 6]:
+            if choice_one in [1, 2, 3, 4, 5, 6, 7]:
                 break
             else:
                 print("Invalid choice.")
@@ -52,8 +55,9 @@ Choose a character for Player 2
 4. J.A.D.
 5. Giga
 6. Minos
-> """))
-            if choice_two in [1, 2, 3, 4, 5, 6]:
+7. Pol
+"""))
+            if choice_two in [1, 2, 3, 4, 5, 6, 7]:
                 break
             else:
                 print("Invalid choice.")
@@ -156,6 +160,7 @@ CHARACTER_MAP = {
     4: JAD,
     5: Giga,
     6: Minos,
+    7: Pol,
 }
 
 def main():
@@ -179,7 +184,6 @@ def main():
 
         elif c == 3:
             guide()
-            # Loop back to show the main menu again after closing guides
 
         elif c == 4:
             print("Exiting...")
