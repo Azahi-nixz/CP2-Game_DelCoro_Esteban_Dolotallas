@@ -20,10 +20,10 @@ class Minos(Character):
 
         if self.has_buff("Immortality"):
             print("Minos has immortality!")
+            return
 
         if self.has_debuff("Vulnerable"):
             dmg *= 2
-            self.Hp -= dmg
 
         self.Hp -= dmg
 
@@ -42,7 +42,7 @@ class Minos(Character):
             self.add_buff("Health Regen", 5)
             print("Passive Jackpot activated!")
         elif r >= 0.5:
-            self.add_buff("Vulnerable", 5)
+            self.add_debuff("Vulnerable", 5)
 
     def skill_3(self, enemy):
         print("Immortality!")
@@ -98,8 +98,8 @@ class Minos(Character):
     def passive(self):
         r = random.random()
         if r < 0.5:
-            self.add_buff("S.E. Immunity" , 5)
+            self.add_buff("S.E. Immunity", 5)
             self.add_buff("Health Regen", 5)
             print("Passive Jackpot activated!")
         elif r >= 0.5:
-            self.add_buff("Vulnerable", 5)
+            self.add_debuff("Vulnerable", 5)

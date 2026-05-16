@@ -1,8 +1,16 @@
-from tkinter import *
+from tkinter import Tk, Toplevel, Label, Text, END, BOTH
 
 def guide():
 
-    app = Tk()
+    # Use Toplevel if a root window already exists, otherwise create one
+    try:
+        root = Tk._default_root
+        if root is not None:
+            app = Toplevel(root)
+        else:
+            raise AttributeError
+    except AttributeError:
+        app = Tk()
 
     app.title("Guides")
     app.geometry("800x800")

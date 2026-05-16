@@ -45,8 +45,8 @@ class JAD(Character):
                 enemy.take_damage(dmg, self)
                 return
 
+            self.ammo -= 2  # Ammo is always spent on attempt
             if self.is_headshot() and self.check_hit(enemy):
-                self.ammo -= 2
                 hp = enemy.Hp
                 dmg = hp - 1
                 enemy.take_damage(dmg, self)
@@ -94,11 +94,11 @@ class JAD(Character):
             if self.Form == "Gun":
                 dmg = self.Atk * 0.3
                 self.ammo -= 1
-                enemy.take_damage(dmg , enemy)
+                enemy.take_damage(dmg, self)
                 print("J.A.D. used his gun!")
             elif self.Form == "Hand":
                 dmg = self.Atk * 0.2
-                enemy.take_damage(dmg, enemy)
+                enemy.take_damage(dmg, self)
                 print("J.A.D. used his knife!")
         else: print(f"{enemy.Name} evaded your attack!")
 
@@ -106,7 +106,7 @@ class JAD(Character):
         r = random.randint(0, 100)
         chance = 10
 
-        if chance <= r:
+        if r <= chance:
             return True
         else:
             return False

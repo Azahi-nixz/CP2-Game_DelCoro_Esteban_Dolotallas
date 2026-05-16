@@ -17,6 +17,7 @@ class Devourer(Character):
 
         if self.has_buff("Immortality"):
             print("Devourer has immortality!")
+            return
 
         self.Hp -= dmg
 
@@ -33,9 +34,9 @@ class Devourer(Character):
         if self.check_hit(enemy):
             print("Lethal claw!")
             dmg = 20
-            enemy.take_damage(dmg, enemy)
+            enemy.take_damage(dmg, self)
             print(f"{enemy.Name} took {dmg} damage!")
-            enemy.add_debuff("Bleeding" , 2)
+            enemy.add_debuff("Bleeding", 2)
         else: print(f"{enemy.Name} evaded your attack!")
 
     def skill_3(self, enemy):
@@ -45,7 +46,7 @@ class Devourer(Character):
     def basic_attack(self, enemy):
         if self.check_hit(enemy):
             dmg = 20 + (self.Atk * 0.1)
-            enemy.take_damage(dmg, enemy)
+            enemy.take_damage(dmg, self)
             print("Slash!")
         else: print(f"{enemy.Name} evaded your attack!")
 

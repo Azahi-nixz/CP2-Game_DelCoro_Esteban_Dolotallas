@@ -92,11 +92,14 @@ class Character:
         if self.has_debuff("Sabotage") and move != 1:
             print("You are sabotaged! Only Basic Attack allowed!")
             return 1
-        if enemy.has_debuff("Bleeding"):
-            bleeding = enemy.MaxHp * 0.2
-            print(f"{enemy.Name} is bleeding!")
-            enemy.take_damage(bleeding, self)
         return move
+
+    def end_of_round_effects(self, enemy):
+        """Called once per turn after the acting player's action, for DoT effects."""
+        if self.has_debuff("Bleeding"):
+            bleeding = self.MaxHp * 0.2
+            print(f"{self.Name} is bleeding!")
+            self.take_damage(bleeding, enemy)
 
     def check_hit(self, enemy):
         r = random.random()
@@ -105,16 +108,3 @@ class Character:
             return True
         else:
             return False
-        
-    def use_skill(self, choice, enemy):
-        if choice not in self.skills:
-            print("Invalid Skill Choice")
-            return None
-        
-        if self.has_buff("Basic Only") and choice != 1:
-            print(f"{self.Name} can only used Basic Attack!")
-            return self.basic_attack (enemy)
-        
-        return self.skills[choice](enemy)
-        
-           
