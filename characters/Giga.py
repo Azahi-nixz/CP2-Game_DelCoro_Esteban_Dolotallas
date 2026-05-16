@@ -1,6 +1,4 @@
-
-
-from Characters import Character
+from characters.Characters import Character
 
 
 class Giga(Character):
@@ -29,8 +27,6 @@ class Giga(Character):
         print(f"{self.Name} took {dmg} damage!")
         print(f"{enemy.Name}'s attack reflected! Dealt {reflected} DMG!")
 
-
-
     def basic_attack(self, enemy):
         if self.check_hit(enemy):
             print("Used Basic Attack!")
@@ -55,14 +51,12 @@ class Giga(Character):
         print(" Giga used Skill 1! ")
         self.add_buff("Double Damage", 1)
 
-
     def skill_2(self, enemy):
         print("Giga used Skill 2!")
 
         self.add_buff("Invincible", 2)
 
         print(f"{self.Name} is immune to damage for 2 turns!")
-
 
     def skill_3(self, enemy):
         print("Giga used Skill 3!")

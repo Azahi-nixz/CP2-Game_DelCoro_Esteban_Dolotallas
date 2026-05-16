@@ -101,9 +101,6 @@ class Character:
             print(f"{self.Name} is bleeding!")
             self.take_damage(bleeding, enemy)
 
-
-
-
     def check_hit(self, enemy):
         r = random.random()
         chance = self.Accuracy / (enemy.Spd + self.Accuracy)

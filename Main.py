@@ -1,11 +1,11 @@
-from Devourer import Devourer
-from Maruzensky import Maruzen
-from Zen import Zen
-from Giga import Giga
-from JAD import JAD
-from Minos import Minos
-from Pol import Pol
-from Guides import guide
+from characters.Devourer import Devourer
+from characters.Maruzensky import Maruzen
+from characters.Zen import Zen
+from characters.Giga import Giga
+from characters.JAD import JAD
+from characters.Minos import Minos
+from characters.Pol import Pol
+from gui.Guides import guide
 
 def interface():
     while True:

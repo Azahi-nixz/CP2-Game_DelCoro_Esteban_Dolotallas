@@ -1,6 +1,6 @@
 import random
 
-from Characters import Character
+from characters.Characters import Character
 
 class JAD(Character):
     def __init__(self):
@@ -122,6 +122,3 @@ class JAD(Character):
 
     def stats(self):
         return f"{self.Name} | HP:{self.Hp} | Ammunition: {self.ammo} | Form:{self.Form}"
-
-
-
