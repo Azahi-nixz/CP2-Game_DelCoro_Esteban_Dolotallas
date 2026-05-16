@@ -1,8 +1,13 @@
 from tkinter import *
 from PIL import Image, ImageTk, ImageOps, ImageEnhance, ImageDraw, ImageFont
 import os
+import sys
 
-_ROOT = os.path.dirname(os.path.dirname(__file__))
+# Ensure project root is on sys.path so imports work
+# whether this file is run directly or as part of a package
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
 
 def asset(path):
     return os.path.join(_ROOT, path)
