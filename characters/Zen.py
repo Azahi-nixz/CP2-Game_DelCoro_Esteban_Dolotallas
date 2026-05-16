@@ -1,4 +1,4 @@
-from Characters import Character
+from characters.Characters import Character
 
 class Zen(Character):
     def __init__(self):
@@ -44,7 +44,6 @@ class Zen(Character):
     def check_transformation(self):
         if self.blood_rage > 100:
             self.Form = "Blood rage"
-
 
     def skill_1(self, enemy):
         print("A lost cause....")
@@ -93,9 +92,7 @@ class Zen(Character):
 
     def end_turn_checks(self):
         if self.Form == "Blood rage":
-            # turn_counter is already incremented in battle(), don't double-count
             if self.turn_counter >= 4:
                 self.Form = "normal"
                 self.blood_rage /= 2
                 print(f"{self.Name} calmed down. Blood Rage ended.")
-

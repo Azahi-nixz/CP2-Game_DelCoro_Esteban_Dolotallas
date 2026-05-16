@@ -1,4 +1,5 @@
 from tkinter import Tk, Toplevel, Label, Text, END, BOTH
+import os
 
 def guide():
 
@@ -22,7 +23,9 @@ def guide():
 
     guides = []
 
-    with open("Guides.txt", "r", encoding="utf-8") as f:
+    # Resolve path relative to project root
+    guides_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Guides.txt")
+    with open(guides_path, "r", encoding="utf-8") as f:
         for line in f:
             guides.append(line)
 

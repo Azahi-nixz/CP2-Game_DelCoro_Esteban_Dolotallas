@@ -1,6 +1,6 @@
 import random
 
-from Characters import Character
+from characters.Characters import Character
 
 class Minos(Character):
     def __init__(self):

@@ -1,5 +1,12 @@
 from tkinter import *
 from PIL import Image, ImageTk, ImageOps
+import os
+
+# Resolve asset paths relative to project root
+_ROOT = os.path.dirname(os.path.dirname(__file__))
+
+def asset(path):
+    return os.path.join(_ROOT, path)
 
 
 class Interface:
@@ -10,7 +17,7 @@ class Interface:
         WIN_W, WIN_H = 500, 500
         self.root.geometry(f"{WIN_W}x{WIN_H}")
         try:
-            raw_bg = Image.open("Assets/bg.jpg")
+            raw_bg = Image.open(asset("Assets/bg.jpg"))
             self.bg = ImageTk.PhotoImage(raw_bg)
 
             self.bg_label = Label(self.root, image=self.bg)
@@ -36,9 +43,18 @@ class Interface:
 
     def lower_grid(self):
         buttons = ["Player 1", "Player 2", "Guides", "Exit"]
-        images = ["Assets/PLAY/p1.png", "Assets/PLAY/p2.png", "Assets/PLAY/guide.png", "Assets/PLAY/exit.png"]
-        hovers = ["Assets/PLAY/p1_hover.png", "Assets/PLAY/p2_hover.png", "Assets/PLAY/guide_hover.png",
-                  "Assets/PLAY/exit_hover.png"]
+        images = [
+            asset("Assets/PLAY/p1.png"),
+            asset("Assets/PLAY/p2.png"),
+            asset("Assets/PLAY/guide.png"),
+            asset("Assets/PLAY/exit.png")
+        ]
+        hovers = [
+            asset("Assets/PLAY/p1_hover.png"),
+            asset("Assets/PLAY/p2_hover.png"),
+            asset("Assets/PLAY/guide_hover.png"),
+            asset("Assets/PLAY/exit_hover.png")
+        ]
 
         BTN_W, BTN_H = 280, 60
 
