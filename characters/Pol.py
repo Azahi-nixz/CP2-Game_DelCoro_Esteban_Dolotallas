@@ -1,4 +1,4 @@
-from Characters import Character
+from characters.Characters import Character
 
 class Pol(Character):
     def __init__(self):
@@ -38,7 +38,6 @@ class Pol(Character):
 
         self.Hp -= dmg
 
-
     def check_transformation(self):
        pass
 
@@ -52,9 +51,11 @@ class Pol(Character):
             dmg = (self.Atk * 0.2) * (self.Spd * 0.3)
             enemy.take_damage(dmg, self)
 
+        else: print("Enemy evaded your attack!")
+
     def skill_3(self, enemy):
         print("Summon: Wind Maiden Hael")
-        self.add_buff("Covenant of the wind", 2)
+        self.add_buff("Covenant of the wind", 3)
 
         self.debuffs.clear()
 
@@ -82,7 +83,3 @@ class Pol(Character):
            if self.has_buff("Covenant of the wind"):
             self.Spd = 120
             self.Atk = 50
-            
-
-
-
