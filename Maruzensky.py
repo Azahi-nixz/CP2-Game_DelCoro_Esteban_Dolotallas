@@ -132,8 +132,7 @@ class Maruzen(Character):
 
         print("Sanity implosion!")
         dmg = self.Sanity / 2
-        enemy.take_damage(dmg, enemy)
-        print(f"{enemy.Name} took {dmg} damage!")
+        enemy.take_damage(dmg, self)
         self.Sanity -= dmg
 
     # ==========================
@@ -152,13 +151,15 @@ class Maruzen(Character):
         elif r < 0.45:
             hits = 2
 
+        dmg_per_hit = enemy.MaxHp * 0.05
         for i in range(hits):
             self.Sanity += 5
+            enemy.take_damage(dmg_per_hit, self)
 
         if hits == 3:
-            dmg = enemy.MaxHp * 0.13
-            enemy.Hp -= dmg
-            print(f"Combo finisher! Dealt {dmg} damage")
+            bonus_dmg = enemy.MaxHp * 0.13
+            enemy.take_damage(bonus_dmg, self)
+            print(f"Combo finisher! Dealt bonus {bonus_dmg} damage")
 
     def enraged_skill_1(self, enemy):
 
@@ -177,7 +178,7 @@ class Maruzen(Character):
         print("Death wish")
 
         dmg = 30 + ((100 - self.Sanity) / 5)
-        enemy.Hp -= dmg
+        enemy.take_damage(dmg, self)
         self.Sanity -= 10
 
     def enraged_skill_3(self, enemy):

@@ -4,20 +4,28 @@ from Zen import Zen
 from Giga import Giga
 from JAD import JAD
 from Minos import Minos
+from Pol import Pol
+from Guides import guide
 
 def interface():
-    choice = int(input("""
+    while True:
+        try:
+            choice = int(input("""
 1. 1 Player
 2. 2 Player
 3. Guides
 4. Exit
 Choose an option: 
 """))
-    return choice
+            if choice in [1, 2, 3, 4]:
+                return choice
+            else:
+                print("Invalid choice. Enter 1-4.")
+        except ValueError:
+            print("Enter a number.")
 
 
 def menu():
-
     while True:
         try:
             choice_one = int(input("""
@@ -28,18 +36,12 @@ Choose a character for Player 1
 4. J.A.D.
 5. Giga
 6. Minos
-7. Icanfixher
-8. SeanJii
-9. Taracoffee
-10. CollectorBaddie
-11. Igop                                  
+7. Pol
 > """))
-
-            if choice_one in [1,2,3,4,5,6,7,8,9, 10, 11]:
+            if choice_one in [1, 2, 3, 4, 5, 6, 7]:
                 break
             else:
                 print("Invalid choice.")
-
         except ValueError:
             print("Enter a number.")
 
@@ -53,18 +55,12 @@ Choose a character for Player 2
 4. J.A.D.
 5. Giga
 6. Minos
-7. Icanfixher
-8. SeanJii
-9. Taracoffee
-10. CollectorBaddie
-11. Igop                                                
-> """))
-
-            if choice_two in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]:
+7. Pol
+"""))
+            if choice_two in [1, 2, 3, 4, 5, 6, 7]:
                 break
             else:
                 print("Invalid choice.")
-
         except ValueError:
             print("Enter a number.")
 
@@ -102,49 +98,6 @@ def get_move(player):
         except ValueError:
             print("Enter a number.")
 
-def player_one(p1, p2):
-    turn = 1
-
-    while p1.is_alive() and p2.is_alive():
-
-        print("\n" + "=" * 40)
-        print(f"TURN {turn}")
-        print("=" * 40)
-
-        current = p1
-        bot = p2
-
-        current.turn_counter += 1
-
-        current.check_transformation()
-
-        print(current.stats())
-        print(current.status())
-
-        move = get_move(current)
-
-        move = current.debuff_checker(move, bot)
-        result = current.use_skill(move, bot)
-
-        if result is True:
-            continue
-
-        current.reduce_cooldowns()
-
-        current.end_turn_checks()
-        current.reduce_effects()
-
-        current.first_turn = False
-
-        turn += 1
-
-    print("\n" + "=" * 40)
-
-    if p1.is_alive():
-        print("PLAYER 1 WINS!")
-    else:
-        print("PLAYER 2 WINS!")
-
 #=========================================
 # BATTLE HANDLER
 #==========================================
@@ -181,6 +134,9 @@ def battle(p1, p2):
         current.end_turn_checks()
         current.reduce_effects()
 
+        # Apply end-of-turn DoT effects (Bleeding, etc.) on the enemy
+        enemy.end_of_round_effects(current)
+
         current.first_turn = False
 
         turn += 1
@@ -197,40 +153,42 @@ def battle(p1, p2):
 # MAIN
 #===========================================
 
+CHARACTER_MAP = {
+    1: Maruzen,
+    2: Zen,
+    3: Devourer,
+    4: JAD,
+    5: Giga,
+    6: Minos,
+    7: Pol,
+}
+
 def main():
+    while True:
+        c = interface()
 
-    choice = menu()
+        if c == 1:
+            print("1 Player mode is not yet implemented.")
 
-    if choice[0] == 1:
-        p1 = Maruzen()
-    if choice[0] == 2:
-        p1 = Zen()
-    if choice[0] == 3:
-        p1 = Devourer()
-    if choice[0] == 4:
-        p1 = JAD()
-    if choice[0] == 5:
-        p1 = Giga()
-    if choice[0] == 6:
-        p1 = Minos()
+        elif c == 2:
+            choice = menu()
 
-    if choice[1] == 1:
-        p2 = Maruzen()
-    if choice[1] == 2:
-        p2 = Zen()
-    if choice[1] == 3:
-        p2 = Devourer()
-    if choice[1] == 4:
-        p2 = JAD()
-    if choice[1] == 5:
-        p2 = Giga()
-    if choice[1] == 6:
-        p2 = Minos()
+            p1 = CHARACTER_MAP[choice[0]]()
+            p2 = CHARACTER_MAP[choice[1]]()
 
-    print(f"\nPlayer 1 chose {p1.Name}")
-    print(f"Player 2 chose {p2.Name}")
+            print(f"\nPlayer 1 chose {p1.Name}")
+            print(f"Player 2 chose {p2.Name}")
 
-    battle(p1, p2)
+            battle(p1, p2)
+            break
+
+        elif c == 3:
+            guide()
+
+        elif c == 4:
+            print("Exiting...")
+            break
+
 
 
 if __name__ == "__main__":

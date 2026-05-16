@@ -21,64 +21,54 @@ class Giga(Character):
             print(f"{self.Name} is invincible! No damage taken!")
             return
 
-        dmg *= 0.8
-        reflected = dmg * 0.2
-
+        reflected = dmg * 0.3
+        reduced = dmg - reflected
+        self.Hp -= reduced
         enemy.Hp -= reflected
-        self.Hp -= dmg
-        print(f"Reflected {reflected} dmg to enemy! ")
-        print(f"Received {dmg} damage!")
+
+        print(f"{self.Name} took {dmg} damage!")
+        print(f"{enemy.Name}'s attack reflected! Dealt {reflected} DMG!")
+
 
 
     def basic_attack(self, enemy):
         if self.check_hit(enemy):
             print("Used Basic Attack!")
             dmg = self.Atk * 0.5
-            enemy.take_damage(dmg , self)
 
-            # If skill 1 is activated
             if self.has_buff("Double Damage"):
                 print(f"{self.Name} has double damage!")
-                dmg += dmg  # apply the effect
-                enemy.take_damage(dmg , enemy)
+                dmg *= 2
 
-            else:
-                print("Normal damage.")
+            if self.has_buff("Enhanced"):
+                dmg *= 2
+
+            enemy.take_damage(dmg, self)
         else:
-             print(f"{enemy.Name} evaded your attack!")
+            print(f"{enemy.Name} evaded your attack!")
 
-    
+    def end_turn_checks(self):
+        if self.has_buff("Enhanced"):
+            print(f"{self.Name} is Enhanced! Stats are currently doubled.")
+
     def skill_1(self, enemy):
         print(" Giga used Skill 1! ")
-        self.add_buff("Double Damage", 2)
+        self.add_buff("Double Damage", 1)
 
 
     def skill_2(self, enemy):
         print("Giga used Skill 2!")
 
-        # GIGA TURN
-        # Negates damage for 2 turns
         self.add_buff("Invincible", 2)
 
         print(f"{self.Name} is immune to damage for 2 turns!")
 
+
     def skill_3(self, enemy):
         print("Giga used Skill 3!")
+        self.add_buff("Enhanced", 2)
 
-        if not self.has_buff("Enhanced"):
-            self.add_buff("Enhanced", 2)
-            self.Hp *= 2
-            self.Atk *= 2
-            print(f"{self.Name}'s stats are doubled for 2 turn!")
-        else:
-            print("Enhanced is already active!")
-
-
-    def end_turn_checks(self):
-       if "Enhanced" not in self.buffs:
-           self.Hp /= 2
-           self.Atk /= 2
-
+        print(f"{self.Name}'s stats are doubled for 2 turns!")
 
     def get_skill_cd(self, move):
         if move == 2:
@@ -86,7 +76,7 @@ class Giga(Character):
         if move == 3:
             return 3
         if move == 4:
-            return 5
+            return 4
         return 0
 
     def check_transformation(self):

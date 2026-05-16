@@ -76,7 +76,6 @@ class Character:
             del self.debuffs[debuff]
             print(f"{self.Name}'s {debuff} debuff expired")
 
-
     def has_debuff(self, name):
         return name in self.debuffs
 
@@ -93,10 +92,14 @@ class Character:
         if self.has_debuff("Sabotage") and move != 1:
             print("You are sabotaged! Only Basic Attack allowed!")
             return 1
-        if self.has_debuff("Bleeding"):
-            bleeding = enemy.Hp * 0.2
-            enemy.take_damage(bleeding , enemy)
         return move
+
+    def end_of_round_effects(self, enemy):
+        """Called once per turn after the acting player's action, for DoT effects."""
+        if self.has_debuff("Bleeding"):
+            bleeding = self.MaxHp * 0.2
+            print(f"{self.Name} is bleeding!")
+            self.take_damage(bleeding, enemy)
 
 
 

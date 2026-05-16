@@ -20,10 +20,10 @@ class Minos(Character):
 
         if self.has_buff("Immortality"):
             print("Minos has immortality!")
+            return
 
         if self.has_debuff("Vulnerable"):
             dmg *= 2
-            self.Hp -= dmg
 
         self.Hp -= dmg
 
@@ -42,7 +42,7 @@ class Minos(Character):
             self.add_buff("Health Regen", 5)
             print("Passive Jackpot activated!")
         elif r >= 0.5:
-            self.add_buff("Vulnerable", 5)
+            self.add_debuff("Vulnerable", 5)
 
     def skill_3(self, enemy):
         print("Immortality!")
@@ -50,27 +50,39 @@ class Minos(Character):
 
     def basic_attack(self, enemy):
         r = random.randint(1, 10000)
-        if r <= 10 * self.luck:
+        threshold = 10 * self.luck
+
+        if r <= threshold:
             enemy.take_damage(999, self)
             print("LUCKY! DEALT 999 dmg!")
-        if 400 >= r > 10 * self.luck:
+        elif r <= 400:
             enemy.take_damage(40, self)
-        if 900 >= r > 400:
+        elif r <= 900:
             enemy.take_damage(35, self)
-        if 1400 >= r > 900:
+        elif r <= 1400:
             enemy.take_damage(35, self)
-        if 1900 >= r > 1400:
+        elif r <= 1900:
             enemy.take_damage(25, self)
-        if 3400 >= r > 1900:
+        elif r <= 3400:
             enemy.take_damage(20, self)
-        if 5000 >= r > 3400:
+        elif r <= 5000:
             enemy.take_damage(15, self)
-        if 7000 >= r > 5000:
+        elif r <= 7000:
             enemy.take_damage(10, self)
-        if 8500 >= r > 7000:
+        elif r <= 8500:
             enemy.take_damage(5, self)
-        if 10000 >= r > 8500:
+        elif r <= 10000:
             enemy.take_damage(1, self)
+
+    def end_turn_checks(self):
+        if self.has_buff("Health Regen"):
+            heal = self.MaxHp * 0.1
+            self.Hp += heal
+            print(f"Health regen activated! Healed {heal} HP!")
+
+        if self.turn_counter > 0 and self.turn_counter % 5 == 0:
+            self.passive()
+
     def get_skill_cd(self, move):
         if move == 2:
             return 2
@@ -83,20 +95,11 @@ class Minos(Character):
     def stats(self):
         return f"{self.Name} | HP:{self.Hp}"
 
-    def end_turn_checks(self):
-        if self.has_buff("Health Regen"):
-            heal = 5
-            self.Hp += heal
-            print("Health regen activated! Healed 5 HP!")
-
-        self.turn_counter += 1
-        if self.turn_counter % 5 == 0:
-            self.passive()
     def passive(self):
         r = random.random()
         if r < 0.5:
-            self.add_buff("S.E. Immunity" , 5)
+            self.add_buff("S.E. Immunity", 5)
             self.add_buff("Health Regen", 5)
             print("Passive Jackpot activated!")
         elif r >= 0.5:
-            self.add_buff("Vulnerable", 5)
+            self.add_debuff("Vulnerable", 5)

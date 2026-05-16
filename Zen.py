@@ -18,16 +18,16 @@ class Zen(Character):
 
     def take_damage(self, dmg, enemy):
 
+        # Reflect mechanic
         if self.has_buff("High counter"):
 
             reduced = dmg * 0.7
             reflected = dmg * 0.3
 
             print("High Counter activated!")
-            print(f"Reflected {reflected} dmg to enemy!")
 
-            enemy.Hp -= reflected
-            self.Hp -= reduced
+            if enemy:
+                enemy.take_damage(reflected, self)
 
             if self.debuffs:
                 debuff_name = next(iter(self.debuffs))
@@ -36,8 +36,10 @@ class Zen(Character):
                 print(f"Reflected debuff: {debuff_name}!")
                 enemy.add_debuff(debuff_name, duration)
 
-        else:
-            self.Hp -= dmg
+            self.Hp -= reduced
+            return
+
+        self.Hp -= dmg
 
     def check_transformation(self):
         if self.blood_rage > 100:
@@ -68,7 +70,7 @@ class Zen(Character):
     def basic_attack(self, enemy):
         if self.check_hit(enemy):
             if self.Form == "normal":
-                enemy.take_damage(5 , self)
+                enemy.take_damage(5, self)
                 print("Zen used basic attack!")
                 self.blood_rage += 5
             elif self.Form == "Blood rage":
@@ -91,8 +93,9 @@ class Zen(Character):
 
     def end_turn_checks(self):
         if self.Form == "Blood rage":
-            if self.turn_counter == 4:
+            # turn_counter is already incremented in battle(), don't double-count
+            if self.turn_counter >= 4:
                 self.Form = "normal"
                 self.blood_rage /= 2
-                self.turn_counter = 0
+                print(f"{self.Name} calmed down. Blood Rage ended.")
 
