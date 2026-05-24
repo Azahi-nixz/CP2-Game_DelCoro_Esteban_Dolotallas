@@ -415,6 +415,13 @@ class CharacterSelectScreen(Frame):
 
     def _confirm(self):
         idx = self.cursor
+        char = CHARACTERS[idx]
+        
+        # Validate character has assets
+        if char["thumbnail"] is None:
+            print(f"Cannot select {char['name']} - character not available yet!")
+            return
+        
         if self.phase == 1:
             self.p1_choice = idx
             self._p1_name.config(text=CHARACTERS[idx]["name"])
@@ -445,4 +452,4 @@ class CharacterSelectScreen(Frame):
             self.controller.show_home()
 
     def _finish(self):
-        self.controller.on_selection_done(self.p1_choice, self.p2_choice)
+        self.controller.on_selection_done(self.p1_choice, self.p2_choice, self.mode)

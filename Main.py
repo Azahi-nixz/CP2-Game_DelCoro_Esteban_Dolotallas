@@ -5,6 +5,7 @@ from characters.Giga import Giga
 from characters.JAD import JAD
 from characters.Minos import Minos
 from characters.Pol import Pol
+from characters.Sed import Sed
 from gui.Guides import guide
 
 def interface():
@@ -161,6 +162,7 @@ CHARACTER_MAP = {
     5: Giga,
     6: Minos,
     7: Pol,
+    8: Sed,
 }
 
 def main():

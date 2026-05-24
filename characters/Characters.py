@@ -16,6 +16,7 @@ class Character:
 
         self.Form = "normal"
         self.turn_counter = 0
+        self.first_turn = True
 
         self.buffs = {}
         self.debuffs = {}
@@ -108,3 +109,20 @@ class Character:
             return True
         else:
             return False
+
+    def take_damage(self, dmg, enemy):
+        """Default damage handler - can be overridden by subclasses"""
+        self.Hp -= dmg
+        print(f"{self.Name} took {dmg} damage!")
+
+    def check_transformation(self):
+        """Check for form transformations - override in subclasses"""
+        pass
+
+    def end_turn_checks(self):
+        """End of turn checks - override in subclasses"""
+        pass
+
+    def stats(self):
+        """Return character stats string"""
+        return f"{self.Name} | HP:{int(self.Hp)}/{self.MaxHp} | Form:{self.Form}"
