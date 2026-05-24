@@ -241,6 +241,7 @@ class Interface:
         ICON_SZ   = max(50, BOT_H - 16)
 
         result = [None]   # shared container for thread result
+        mode_ref = [mode]  # store mode for callback
 
         def do_preload():
             # All heavy PIL work happens here (background thread)
@@ -254,7 +255,7 @@ class Interface:
                 loading.stop_animations()
                 from gui.CharacterSelect import CharacterSelectScreen
                 self._switch(CharacterSelectScreen(
-                    self.root, self, mode=mode, preloaded=result[0]))
+                    self.root, self, mode=mode_ref[0], preloaded=result[0]))
 
         threading.Thread(target=do_preload, daemon=True).start()
 
@@ -262,12 +263,45 @@ class Interface:
         from gui.Guides import guide
         guide()
 
-    def on_selection_done(self, p1_idx, p2_idx):
+    def show_battle(self, mode, p1_name, p2_name):
+        """
+        Load battle scene with loading screen
+        """
+        from gui.BattleScene import preload_battle_assets_bg, BattleScene
+        
+        # Show loading screen
+        loading = LoadingScreen(self.root, self)
+        self._switch(loading)
+        self.root.update()
+        
+        # Calculate sprite dimensions
+        self.root.update_idletasks()
+        H = self.root.winfo_height() or 720
+        sprite_h = int(H * 0.45)
+        
+        result = [None]
+        
+        def do_preload():
+            result[0] = preload_battle_assets_bg(p1_name, p2_name, sprite_h)
+            self.root.after(0, lambda: _on_done())
+        
+        def _on_done():
+            if self._current_frame is loading:
+                loading.stop_animations()
+                self._switch(BattleScene(
+                    self.root, self, mode, p1_name, p2_name, preloaded=result[0]))
+        
+        threading.Thread(target=do_preload, daemon=True).start()
+
+    def on_selection_done(self, p1_idx, p2_idx, mode):
         from gui.CharacterSelect import CHARACTERS
-        print(f"P1 → {CHARACTERS[p1_idx]['name']}")
-        print(f"P2 → {CHARACTERS[p2_idx]['name']}")
-        # TODO: launch battle screen
-        self.show_home()
+        p1_name = CHARACTERS[p1_idx]['name']
+        p2_name = CHARACTERS[p2_idx]['name']
+        print(f"P1 → {p1_name}")
+        print(f"P2 → {p2_name}")
+        
+        # Show loading screen and preload battle assets
+        self.show_battle(mode, p1_name, p2_name)
 
     def run(self):
         self.root.mainloop()
