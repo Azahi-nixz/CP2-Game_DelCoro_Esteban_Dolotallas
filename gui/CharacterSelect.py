@@ -18,11 +18,11 @@ def asset(path):
 CHARACTERS = [
     {"name": "Maruzen",  "thumbnail": "Assets/Game characters/MaruzenAssets/Thumbnail_maruzen.png", "desc": "Sanity-driven brawler.\nEnrages when pushed to the edge."},
     {"name": "Zen",      "thumbnail": "Assets/Game characters/ZenAssets/Zen_thumbnail.png",          "desc": "Calm swordsman.\nBlood Rage unlocks true power."},
-    {"name": "Devourer", "thumbnail": None,                                                           "desc": "Immortal predator.\nDrains life and refuses to die."},
+    {"name": "Devourer", "thumbnail": "Assets/Game characters/DevourerAssets/thumbnail_devourer.png", "desc": "Immortal predator.\nDrains life and refuses to die."},
     {"name": "J.A.D.",   "thumbnail": "Assets/Game characters/JADAssets/Thumbnail_JAD.png",          "desc": "Gun & blade duelist.\nAmmo management is key."},
     {"name": "Giga",     "thumbnail": "Assets/Game characters/GigaAssets/Thumbnail_Giga.png",        "desc": "Armored tank.\nReflects damage and buffs himself."},
     {"name": "Minos",    "thumbnail": "Assets/Game characters/MinosAssets/Thumbnail_Minos.png",      "desc": "Luck-based wildcard.\nCan one-shot or barely scratch."},
-    {"name": "Pol",      "thumbnail": None,                                                           "desc": "Wind warrior.\nSpeed-scaled damage and counters."},
+    {"name": "Pol",      "thumbnail": "Assets/Game characters/PolAssets/thumbnail_pol.png",           "desc": "Wind warrior.\nSpeed-scaled damage and counters."},
     {"name": "Sed",      "thumbnail": "Assets/Game characters/SedAssets/Thumbnail_sed.png",          "desc": "War maiden summoner.\nExcalibur mode boosts all stats."},
     {"name": "???",      "thumbnail": None,                                                           "desc": "Identity unknown.\nComing soon..."},
     {"name": "???",      "thumbnail": None,                                                           "desc": "Identity unknown.\nComing soon..."},
@@ -93,10 +93,7 @@ def _pil_dim(path, size, factor=0.45):
 
 
 def preload_images_bg(thumb_w, thumb_h, prev_w, prev_h, icon_sz):
-    """
-    Heavy PIL work — safe to run in a background thread.
-    Returns dict of lists of PIL Image objects (NOT PhotoImage).
-    """
+    # OPTIMIZATIONNNNNNNNNNNNNNNNNNNN
     norm_pil   = []
     bright_pil = []
     prev_pil   = []
