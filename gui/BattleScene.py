@@ -1090,6 +1090,15 @@ class BattleScene(Frame):
                 self.after(600, lambda: self._end_game(winner=1))
                 return
 
+            # Check if player just put themselves to sleep (e.g., Russelle Skill 1)
+            if current.has_buff("Sleeping"):
+                self._log(f"  {current.Name} falls asleep immediately!", tag)
+                self.current_turn = 2 if self.current_turn == 1 else 1
+                if self.current_turn == 1:
+                    self.turn_number += 1
+                self.after(800, self._process_turn)
+                return
+
             if result is True:
                 self._log(f"  ★  {current.Name} gets a bonus turn!", tag)
                 self.after(800, self._process_turn)
