@@ -1,0 +1,19 @@
+Blu Room Battlefield
+Version: 1.0.0
+Release Date: June 12, 2026
+Build: Enterprise Edition
+
+Features:
+- 11 Unique Characters
+- Configurable Turn Timer (60-120s)
+- In-Game Pause/Resume System
+- Battle Restart Functionality
+- Enhanced Bot AI
+- Professional UI/UX
+
+Requirements:
+- Python 3.8+
+- Pillow >= 9.0.0
+- pygame >= 2.0.0
+
+Copyright © 2026 All Rights Reserved

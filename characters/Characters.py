@@ -1,0 +1,136 @@
+import random
+
+
+class Character:
+
+    def __init__(self, Name, Hp, Atk, Mana, Sanity, Spd, Acc, Eff):
+        self.Name = Name
+        self.Hp = Hp
+        self.MaxHp = Hp
+        self.Atk = Atk
+        self.Mana = Mana
+        self.Sanity = Sanity
+        self.Spd = Spd
+        self.Accuracy = Acc
+        self.Eff = Eff
+
+        self.Form = "normal"
+        self.turn_counter = 0
+        self.first_turn = True
+
+        self.buffs = {}
+        self.debuffs = {}
+
+        self.skills = {}
+        self.cooldowns = {}
+
+    def is_alive(self):
+        return self.Hp > 0
+
+    def use_skill(self, move, enemy):
+
+        if self.cooldowns.get(move, 0) > 0:
+            print("Skill is on cooldown!")
+            return True
+
+        result = self.skills[move](enemy)
+
+        self.cooldowns[move] = self.get_skill_cd(move)
+
+        return result
+
+    def reduce_cooldowns(self):
+        for k in self.cooldowns:
+            self.cooldowns[k] = max(self.cooldowns[k] - 1, 0)
+
+    def add_buff(self, name, duration):
+        self.buffs[name] = duration
+        print(f"{self.Name} gained buff: {name} ({duration} turns)")
+
+    def add_debuff(self, name, duration):
+        if "S.E. Immunity" in self.buffs or "S.E Immunity" in self.buffs:
+            print(f"{self.Name} has Status effect immunity! Cannot inflict debuff!")
+        else:
+            self.debuffs[name] = duration
+            print(f"{self.Name} received debuff: {name} ({duration} turns)")
+
+    def reduce_effects(self):
+        expired = []
+
+        for buff in self.buffs:
+            self.buffs[buff] -= 1
+            if self.buffs[buff] <= 0:
+                expired.append(buff)
+
+        for buff in expired:
+            del self.buffs[buff]
+            print(f"{self.Name}'s {buff} buff expired")
+
+        expired = []
+
+        for debuff in self.debuffs:
+            self.debuffs[debuff] -= 1
+            if self.debuffs[debuff] <= 0:
+                expired.append(debuff)
+
+        for debuff in expired:
+            del self.debuffs[debuff]
+            print(f"{self.Name}'s {debuff} debuff expired")
+
+    def has_debuff(self, name):
+        return name in self.debuffs
+
+    def has_buff(self, name):
+        return name in self.buffs
+
+    def status(self):
+        return f"Buffs: {list(self.buffs.keys())} | Debuffs: {list(self.debuffs.keys())}"
+
+    def get_skill_cd(self, move):
+        return 0
+
+    def debuff_checker(self, move, enemy):
+        if self.has_debuff("Sabotage") and move != 1:
+            print("You are sabotaged! Only Basic Attack allowed!")
+            return 1
+        if self.has_debuff("Basic Only") and move != 1:
+            print("You can only use Basic Attack!")
+            return 1
+        return move
+
+    def end_of_round_effects(self, enemy):
+        if self.has_debuff("Bleeding"):
+            bleeding = self.MaxHp * 0.2
+            print(f"{self.Name} is bleeding!")
+            self.take_damage(bleeding, enemy)
+        if self.has_debuff("Burned"):
+            burn_dmg = self.MaxHp * 0.05
+            print(f"{self.Name} is burning!")
+            self.take_damage(burn_dmg, enemy)
+
+
+
+    def check_hit(self, enemy):
+        r = random.random()
+        chance = self.Accuracy / (enemy.Spd + self.Accuracy)
+        if chance >= r:
+            return True
+        else:
+            return False
+
+    def take_damage(self, dmg, enemy):
+        """Default damage handler - can be overridden by subclasses"""
+        self.Hp -= dmg
+        print(f"{self.Name} took {dmg} damage!")
+
+    def check_transformation(self):
+        """Check for form transformations - override in subclasses"""
+        pass
+
+    def end_turn_checks(self):
+        """End of turn checks - override in subclasses"""
+        pass
+
+    def stats(self):
+        """Return character stats string"""
+        return f"{self.Name} | HP:{int(self.Hp)}/{self.MaxHp} | Form:{self.Form}"
