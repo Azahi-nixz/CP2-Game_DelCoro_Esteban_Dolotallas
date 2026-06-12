@@ -540,7 +540,7 @@ class BattleScene(Frame):
         self._cancel_anims()
 
         cfg      = ANIM_CONFIG.get(self.p1_name if attacker_side == "p1" else self.p2_name,
-                                   {"attack_color": "#ffffff", "hit_color": "#ff000033",
+                                   {"attack_color": "#ffffff", "hit_color": "#ff0000",
                                     "attack_offset": 60})
         offset   = cfg["attack_offset"]
         atk_lbl  = self._p1_sprite if attacker_side == "p1" else self._p2_sprite
