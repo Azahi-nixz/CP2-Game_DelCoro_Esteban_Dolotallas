@@ -7,10 +7,10 @@ A competitive turn-based battle game featuring 11 unique characters with distinc
 ### Game Mechanics
 - **Turn-based Combat System** - Strategic gameplay with attack, defend, and special ability options
 - **11 Unique Characters** - Each with custom stats, special abilities, and visual assets
-- **Three Game Modes**:
+- **Two Game Modes**:
   - **PvP (Player vs Player)** - Battle against a friend locally
   - **PvE (Player vs Bot)** - Face off against AI opponents
-  - **Bot vs Bot** - Watch AI battles unfold
+  
 - **Dynamic Combat**:
   - Normal attacks with critical hit chances
   - Defensive stance to reduce incoming damage
