@@ -1,3 +1,4 @@
+BlueRoom Battlefield is a turn-based strategy game where players battle against opponents using careful planning and smart decisions. Each player takes turns attacking, defending, and using special abilities to gain an advantage. The goal is to defeat the enemy and become the champion of the battlefield.
 
 Character - Devourer
 A character that can heal, tank, and transform into another beast that gains immortality!.
