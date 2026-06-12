@@ -991,6 +991,23 @@ class BattleScene(Frame):
                 self.turn_number += 1
             self.after(800, self._process_turn)
             return
+        
+        # ── SLEEPING check — skip this turn entirely ──────────
+        if current.has_buff("Sleeping"):
+            current.buffs["Sleeping"] -= 1
+            if current.buffs["Sleeping"] <= 0:
+                del current.buffs["Sleeping"]
+                self._log(f"  {current.Name} wakes up!", tag)
+            else:
+                self._log(f"  {current.Name} is sleeping and cannot move! "
+                          f"({current.buffs['Sleeping']} turns left)", tag)
+            self._update_display()
+            # Advance turn without any input or action
+            self.current_turn = 2 if self.current_turn == 1 else 1
+            if self.current_turn == 1:
+                self.turn_number += 1
+            self.after(800, self._process_turn)
+            return
         # ─────────────────────────────────────────────────────
 
         sys.stdout = self._log_capture
