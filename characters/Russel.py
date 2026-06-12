@@ -77,11 +77,11 @@ class Russel(Character):
         print(f"{self.Name} used Let's Dance!")
 
         # Force enemy to only use basic attack next turn
-        enemy.add_debuff("Taunted", 1)
+        enemy.add_debuff("Taunted", 3)
         
         # Both take 20% more damage for the next turn
-        self.add_debuff("Vulnerable", 1)
-        enemy.add_debuff("Vulnerable", 1)
+        self.add_debuff("Vulnerable", 3)
+        enemy.add_debuff("Vulnerable", 3)
         
         print(f"{enemy.Name} is taunted and can only use basic attack next turn!")
         print(f"Both {self.Name} and {enemy.Name} take 20% more damage!")
@@ -114,7 +114,7 @@ class Russel(Character):
         if move == 2:
             return 5
         if move == 3:
-            return 2
+            return 3
         if move == 4:
             return 999
         return 0
