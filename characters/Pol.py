@@ -75,6 +75,7 @@ class Pol(Character):
             return 5
         return 0
 
+
     def stats(self):
         return f"{self.Name} | HP:{self.Hp}"
 
@@ -83,3 +84,8 @@ class Pol(Character):
            if self.has_buff("Covenant of the wind"):
             self.Spd = 120
             self.Atk = 50
+           else:
+            self.Atk = 30
+            self.Spd = 50
+        self.Hp += 3
+
