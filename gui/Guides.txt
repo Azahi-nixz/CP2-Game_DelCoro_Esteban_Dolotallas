@@ -149,3 +149,39 @@ Desc: Perform a coin flip which has a 50/50 chance of either getting Jackpot or 
 Skill 3: “It was Inevitable”
 Accessible after 5 turns, CD: 10 turns
 Desc: Gain Undying and Health Regen for the next 3 turns.
+
+Character - Sol Emberlord
+Passive: The Sol
+All of Chester’s moves contains burning effect. In exchange, Chester takes 5 damage.
+
+Skill 1: Sol kick
+
+Chester dashes and kicks the opponent. Dealing 25 damage.
+
+Skill 2: Sol Doppleflame
+
+Chester creates a clone of himself to confuse the opponent. The opponent’s accuracy is decreases by 30 and gives the opponent burning effect. Chester restores 15 hp after using this move.
+
+Skill 3: Sol Infinite Ember Requiem
+
+Chester creates thousands of afterimages then explodes into a sea of flames that deals 40% of the opponent’s hp.
+
+Character - Hotori
+
+Passive: 
+
+There is a 40% chance that Enzo will have an extra turn.
+
+
+Skill 1: Chrono Shift
+
+Reverts the damage taken from the previous turn
+
+
+Skill 2: Godspeed
+
+Enzo deals a barrage of attacks that deal 30% of the opponent’s HP
+
+Skill 3: World’s Tide
+
+Enzo stops time, making the opponent vulnerable for 3 turns and the cooldown of all skills are reseted.
