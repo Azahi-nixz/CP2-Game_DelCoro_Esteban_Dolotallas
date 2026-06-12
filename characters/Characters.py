@@ -96,6 +96,9 @@ class Character:
         if self.has_debuff("Basic Only") and move != 1:
             print("You can only use Basic Attack!")
             return 1
+        if self.has_debuff("Taunted") and move != 1:
+            print("You are taunted! Only Basic Attack allowed!")
+            return 1
         return move
 
     def end_of_round_effects(self, enemy):
