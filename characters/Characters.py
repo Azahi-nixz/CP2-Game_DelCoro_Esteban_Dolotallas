@@ -1,4 +1,5 @@
 import random
+from Main import battle
 
 
 class Character:
@@ -96,11 +97,12 @@ class Character:
         return move
 
     def end_of_round_effects(self, enemy):
-        """Called once per turn after the acting player's action, for DoT effects."""
         if self.has_debuff("Bleeding"):
             bleeding = self.MaxHp * 0.2
             print(f"{self.Name} is bleeding!")
             self.take_damage(bleeding, enemy)
+
+
 
     def check_hit(self, enemy):
         r = random.random()

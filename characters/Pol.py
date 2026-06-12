@@ -48,7 +48,7 @@ class Pol(Character):
     def skill_2(self, enemy):
         if self.check_hit(enemy):
             print("Drive: Windcharge")
-            dmg = (self.Atk * 0.2) * (self.Spd * 0.3)
+            dmg = (self.Atk * 0.2) + (self.Spd * 0.3)
             enemy.take_damage(dmg, self)
 
         else: print("Enemy evaded your attack!")

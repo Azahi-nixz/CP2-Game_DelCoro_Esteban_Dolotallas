@@ -115,6 +115,10 @@ def battle(p1, p2):
         current = p1 if turn % 2 == 1 else p2
         enemy = p2 if turn % 2 == 1 else p1
 
+        if current.has_debuff("Frozen"):
+            print("You cannot move. Turn automatically finish")
+            turn += 1
+
         current.turn_counter += 1
 
         current.check_transformation()
