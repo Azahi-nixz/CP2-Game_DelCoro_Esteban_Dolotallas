@@ -39,11 +39,14 @@ class Sed(Character):
         self.debuffs.clear()
 
     def basic_attack(self, enemy):
-        if self.check_hit(enemy):
+        if self.has_buff("BA boost"):
             dmg = 20 + (self.Spd * 0.1)
             enemy.take_damage(dmg, self)
+            print("Supreme gale slash")
+        else:
+            dmg = 10 + (self.Spd * 0.1)
+            enemy.take_damage(dmg, self)
             print("Gale slash")
-        else: print(f"{enemy.Name} evaded your attack!")
 
     def get_skill_cd(self, move):
         if move == 2:

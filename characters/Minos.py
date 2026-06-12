@@ -4,7 +4,7 @@ from characters.Characters import Character
 
 class Minos(Character):
     def __init__(self):
-        super().__init__("Minos", 50, 0, 0, 0, 25, 0, 0)
+        super().__init__("Minos", 60, 0, 0, 0, 25, 0, 0)
 
         self.skills = {
             1: self.basic_attack,

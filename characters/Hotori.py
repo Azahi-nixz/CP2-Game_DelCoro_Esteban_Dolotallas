@@ -2,7 +2,7 @@ import random
 from characters.Characters import Character
 
 
-class Maruzen(Character):
+class Hotori(Character):
 
     def __init__(self):
         super().__init__("Maruzen", 40, 0, 0, 100, 30, 0, 0)
@@ -90,16 +90,9 @@ class Maruzen(Character):
     # NORMAL FORM
     # ==========================
 
-    def basic_attack(self, enemy):
+    def passive(self):
 
-        if self.is_enraged():
-            return self.enraged_basic(enemy)
-
-        print("Why would I fight?")
-
-        self.Sanity += 10
-
-        if random.random() < 0.1:
+        if random.random() < 0.2:
             print("Bonus turn!")
             return True
 
@@ -107,94 +100,49 @@ class Maruzen(Character):
 
     def skill_1(self, enemy):
 
-        if self.is_enraged():
-            return self.enraged_skill_1(enemy)
-
-        print("Please slap me")
+        print("Chrono Shift")
 
         self.Hp += self.last_damage_taken
-        self.Sanity -= 20
+        return None
 
     def skill_2(self, enemy):
 
-        if self.is_enraged():
-            return self.enraged_skill_2(enemy)
-
-        print("Immune to physical damage!")
-        self.add_buff("Invincible", 2)
-        self.Sanity -= 30
+        if self.check_hit(enemy):
+            print("Godspeed!")
+            dmg = enemy.Hp * 0.3
+            enemy.take_damage(dmg, self)
 
     def skill_3(self, enemy):
+        enemy.add_debuff("Frozen", 4)
+        for move in self.cooldowns:
+            self.cooldowns[move] = 0
 
-        if self.is_enraged():
-            return self.enraged_skill_3(enemy)
+        return True
 
-        print("Sanity implosion!")
-        dmg = self.Sanity / 2
-        enemy.take_damage(dmg, self)
-        self.Sanity -= dmg
+    def basic_attack(self, enemy):
+        print("Basic Attack!")
+        if self.check_hit(enemy):
+            enemy.take_damage(15, self)
+        return True
 
-    # ==========================
-    # ENRAGED FORM
-    # ==========================
 
-    def enraged_basic(self, enemy):
 
-        print("Payback")
-
-        hits = 1
-        r = random.random()
-
-        if r < 0.15:
-            hits = 3
-        elif r < 0.45:
-            hits = 2
-
-        dmg_per_hit = enemy.MaxHp * 0.05
-        for i in range(hits):
-            self.Sanity += 5
-            enemy.take_damage(dmg_per_hit, self)
-
-        if hits == 3:
-            bonus_dmg = enemy.MaxHp * 0.13
-            enemy.take_damage(bonus_dmg, self)
-            print(f"Combo finisher! Dealt bonus {bonus_dmg} damage")
-
-    def enraged_skill_1(self, enemy):
-
-        print("Manipulation")
-
-        chance = 0.03 * self.turn_counter
-
-        if random.random() < chance:
-            print("Enemy surrendered!")
-            enemy.Hp = 0
-        else:
-            print("Failed!")
-
-    def enraged_skill_2(self, enemy):
-
-        print("Death wish")
-
-        dmg = 30 + ((100 - self.Sanity) / 5)
-        enemy.take_damage(dmg, self)
-        self.Sanity -= 10
-
-    def enraged_skill_3(self, enemy):
-
-        print("System sabotage")
-        enemy.add_debuff("Sabotage", 2)
-
-    # ==========================
 
     def get_skill_cd(self, move):
         if move == 2:
             return 2
+
         if move == 3:
-            return 5
+
+            return 3
+
         if move == 4:
-            return 4
+            return 5
         return 0
 
+
+
+
+
     def stats(self):
-        return f"{self.Name} | HP:{self.Hp} | Sanity:{self.Sanity} | Form:{self.Form}"
+        return f"{self.Name} | HP:{self.Hp} | Form:{self.Form}"

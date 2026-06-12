@@ -80,7 +80,7 @@ class Zen(Character):
 
     def get_skill_cd(self, move):
         if move == 2:
-            return 1
+            return 2
         if move == 3:
             return 3
         if move == 4:
