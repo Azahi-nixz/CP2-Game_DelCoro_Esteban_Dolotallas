@@ -179,9 +179,7 @@ pyinstaller BluRoomBattlefield.spec
 - ✅ Music and sound effects
 - ✅ Windows executable build
 
-## 👥 Credits
-
-**Developed by**: Azahi-nixz  
+## 👥 Credits 
 **Project**: CP2 - Game Development  
 **Course**: Computer Programming 2  
 
