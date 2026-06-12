@@ -419,7 +419,14 @@ class CharacterSelectScreen(Frame):
             self._p1_name.config(text=CHARACTERS[idx]["name"])
             self._p1_icon.config(image=self._p1bar[idx])
             if self.mode == 1:
-                self.p2_choice = idx
+                # Bot mode: select a random character different from player's choice
+                import random
+                available = [i for i in range(len(CHARACTERS)) if i != idx]
+                bot_idx = random.choice(available)
+                self.p2_choice = bot_idx
+                self._p2_name.config(text=CHARACTERS[bot_idx]["name"])
+                self._p2_icon.config(image=self._p2bar[bot_idx])
+                self._refresh_grid()
                 self.after(400, self._finish)
             else:
                 self.phase = 2
