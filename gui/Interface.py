@@ -1,11 +1,10 @@
 from tkinter import *
+from tkinter import filedialog
 from PIL import Image, ImageTk, ImageOps, ImageEnhance
 import os
 import sys
 import threading
 
-# Ensure project root is on sys.path so imports work
-# whether this file is run directly or as part of a package
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
@@ -13,15 +12,141 @@ if _ROOT not in sys.path:
 def asset(path):
     return os.path.join(_ROOT, path)
 
+from gui.MusicManager import music
+
 
 # ─────────────────────────────────────────────────────────────
-# LOADING SCREEN FRAME
+# MUSIC BAR  — subtle persistent strip at the very bottom
+# ─────────────────────────────────────────────────────────────
+class MusicBar(Frame):
+    """
+    A slim (~28 px) bar docked to the bottom of the window.
+    Contains:
+      ♪ / ✕  mute toggle
+      ━━━━━  volume slider (Scale widget)
+      track label (truncated)
+      [+]  browse local file
+      [×]  clear custom / revert to slot music
+    """
+    BAR_H  = 28
+    BG     = "#0d0d14"
+    FG     = "#555566"
+    FG_ACT = "#aaaacc"
+
+    def __init__(self, master, controller):
+        super().__init__(master, bg=self.BG, height=self.BAR_H)
+        self.controller = controller
+        self.place(relx=0, rely=1.0, relwidth=1, anchor="sw")
+
+        self._build()
+        self._refresh_label()
+
+    def _build(self):
+        # ── mute button ──────────────────────────────────────
+        self._mute_btn = Label(
+            self, text="♪", font=("rainyhearts", 11),
+            fg=self.FG_ACT, bg=self.BG, cursor="hand2", padx=6)
+        self._mute_btn.pack(side="left")
+        self._mute_btn.bind("<Button-1>", self._toggle_mute)
+
+        # ── volume slider ─────────────────────────────────────
+        self._vol_var = DoubleVar(value=music.get_volume())
+        self._slider = Scale(
+            self, from_=0.0, to=1.0, resolution=0.01,
+            orient="horizontal", variable=self._vol_var,
+            command=self._on_volume,
+            length=90, showvalue=False,
+            bg=self.BG, fg=self.FG, troughcolor="#1a1a2e",
+            highlightthickness=0, bd=0, sliderlength=10,
+            activebackground=self.FG_ACT)
+        self._slider.pack(side="left", padx=(0, 6))
+
+        # ── track label ───────────────────────────────────────
+        self._track_lbl = Label(
+            self, text="", font=("rainyhearts", 9),
+            fg=self.FG, bg=self.BG, anchor="w", width=28)
+        self._track_lbl.pack(side="left", padx=(0, 4))
+
+        # ── browse button ─────────────────────────────────────
+        browse_btn = Label(
+            self, text="[+]", font=("rainyhearts", 9),
+            fg=self.FG, bg=self.BG, cursor="hand2", padx=4)
+        browse_btn.pack(side="left")
+        browse_btn.bind("<Button-1>", self._browse)
+        browse_btn.bind("<Enter>", lambda e: e.widget.config(fg=self.FG_ACT))
+        browse_btn.bind("<Leave>", lambda e: e.widget.config(fg=self.FG))
+
+        # ── clear custom button ───────────────────────────────
+        self._clear_btn = Label(
+            self, text="[×]", font=("rainyhearts", 9),
+            fg=self.FG, bg=self.BG, cursor="hand2", padx=4)
+        self._clear_btn.pack(side="left")
+        self._clear_btn.bind("<Button-1>", self._clear_custom)
+        self._clear_btn.bind("<Enter>", lambda e: e.widget.config(fg="#ff6644"))
+        self._clear_btn.bind("<Leave>", lambda e: e.widget.config(fg=self.FG))
+
+    def _on_volume(self, val):
+        music.set_volume(float(val))
+        self._refresh_mute_icon()
+
+    def _toggle_mute(self, _event=None):
+        music.toggle_mute()
+        self._refresh_mute_icon()
+
+    def _refresh_mute_icon(self):
+        self._mute_btn.config(text="✕" if music.is_muted() else "♪")
+
+    def _refresh_label(self):
+        if music.has_custom():
+            name = music.get_custom_name() or ""
+            # truncate long names
+            if len(name) > 28:
+                name = name[:25] + "..."
+            self._track_lbl.config(text=f"♫ {name}", fg="#8888aa")
+            self._clear_btn.config(fg=self.FG)
+        else:
+            self._track_lbl.config(text="default music", fg=self.FG)
+            self._clear_btn.config(fg="#2a2a3a")   # dim — nothing to clear
+
+    def _browse(self, _event=None):
+        """Open a file dialog and load the chosen track immediately."""
+        path = filedialog.askopenfilename(
+            title="Select music file",
+            filetypes=[
+                ("Audio files", "*.ogg *.mp3 *.wav *.flac"),
+                ("All files",   "*.*"),
+            ],
+            initialdir=os.path.join(_ROOT, "Assets", "Music"),
+        )
+        if not path:
+            return
+        if music.load_custom(path):
+            self._refresh_label()
+
+    def _clear_custom(self, _event=None):
+        """Revert to the slot music for the current screen."""
+        if not music.has_custom():
+            return
+        music.clear_custom()
+        self._refresh_label()
+        # Re-trigger the current screen's slot music
+        self.controller.replay_current_music()
+
+    def update_label(self):
+        """Call after any music change to sync the label."""
+        self._refresh_label()
+        self._vol_var.set(music.get_volume())
+        self._refresh_mute_icon()
+
+
+# ─────────────────────────────────────────────────────────────
+# LOADING SCREEN
 # ─────────────────────────────────────────────────────────────
 class LoadingScreen(Frame):
 
     _SPLASH_IMAGES = [
         "Assets/download (2).jpg",
-        "Assets/download (1).jpg"
+        "Assets/download (1).jpg",
     ]
     _splash_idx = 0
 
@@ -38,7 +163,6 @@ class LoadingScreen(Frame):
         W = master.winfo_width()  or 1280
         H = master.winfo_height() or 720
 
-        # Dimmed background
         try:
             raw = Image.open(asset("Assets/bg.jpg")).convert("RGBA")
             raw = raw.resize((W, H), Image.Resampling.LANCZOS)
@@ -49,7 +173,6 @@ class LoadingScreen(Frame):
         except Exception:
             pass
 
-        # Character splash (right side)
         splash_path = self._SPLASH_IMAGES[LoadingScreen._splash_idx % len(self._SPLASH_IMAGES)]
         LoadingScreen._splash_idx += 1
         splash_h = int(H * 0.75)
@@ -71,16 +194,13 @@ class LoadingScreen(Frame):
         except Exception:
             pass
 
-        # Left text block
         text_x = int(W * 0.07)
         Label(self, text="BLUROOM BATTLEFIELD",
               font=("rainyhearts", max(16, int(W * 0.022)), "bold"),
-              fg="#3399ff", bg="black"
-              ).place(x=text_x, y=int(H * 0.28))
+              fg="#3399ff", bg="black").place(x=text_x, y=int(H * 0.28))
         Label(self, text="CHARACTER SELECT",
               font=("rainyhearts", max(28, int(W * 0.042)), "bold"),
-              fg="#ffffff", bg="black"
-              ).place(x=text_x, y=int(H * 0.35))
+              fg="#ffffff", bg="black").place(x=text_x, y=int(H * 0.35))
         Frame(self, bg="#3399ff", height=3).place(
             x=text_x, y=int(H * 0.47), width=int(W * 0.35))
 
@@ -89,7 +209,6 @@ class LoadingScreen(Frame):
                                   fg="#888899", bg="black")
         self._loading_lbl.place(x=text_x, y=int(H * 0.52))
 
-        # Progress bar
         bar_y = int(H * 0.60)
         bar_w = int(W * 0.35)
         Frame(self, bg="#1a1a2e").place(x=text_x, y=bar_y, width=bar_w, height=4)
@@ -107,8 +226,7 @@ class LoadingScreen(Frame):
     def _animate_dots(self):
         if not self.winfo_exists():
             return
-        dots = "." * (self._dot_count % 4)
-        self._loading_lbl.config(text=f"Loading{dots}")
+        self._loading_lbl.config(text="Loading" + "." * (self._dot_count % 4))
         self._dot_count += 1
         self._dot_job = self.after(400, self._animate_dots)
 
@@ -135,7 +253,7 @@ class LoadingScreen(Frame):
 
 
 # ─────────────────────────────────────────────────────────────
-# HOME SCREEN FRAME
+# HOME SCREEN
 # ─────────────────────────────────────────────────────────────
 class HomeScreen(Frame):
     def __init__(self, master, controller):
@@ -159,21 +277,26 @@ class HomeScreen(Frame):
 
         Label(self, text="Bluroom Battlefield",
               fg="white", bg="black",
-              font=("rainyhearts", 36, "bold")
-              ).pack(pady=(80, 60))
+              font=("rainyhearts", 36, "bold")).pack(pady=(80, 60))
 
         btn_data = [
-            ("Player 1", "Assets/PLAY/p1.png",    "Assets/PLAY/p1_hover.png",    lambda: controller.show_char_select(1)),
-            ("Player 2", "Assets/PLAY/p2.png",    "Assets/PLAY/p2_hover.png",    lambda: controller.show_char_select(2)),
-            ("Guides",   "Assets/PLAY/guide.png", "Assets/PLAY/guide_hover.png", controller.open_guides),
-            ("Exit",     "Assets/PLAY/exit.png",  "Assets/PLAY/exit_hover.png",  master.destroy),
+            ("Player 1", "Assets/PLAY/p1.png",    "Assets/PLAY/p1_hover.png",
+             lambda: controller.show_char_select(1)),
+            ("Player 2", "Assets/PLAY/p2.png",    "Assets/PLAY/p2_hover.png",
+             lambda: controller.show_char_select(2)),
+            ("Guides",   "Assets/PLAY/guide.png", "Assets/PLAY/guide_hover.png",
+             controller.open_guides),
+            ("Exit",     "Assets/PLAY/exit.png",  "Assets/PLAY/exit_hover.png",
+             master.destroy),
         ]
 
         BTN_W, BTN_H = 280, 60
         for name, img_path, hover_path, cmd in btn_data:
             try:
-                norm = ImageOps.fit(Image.open(asset(img_path)),  (BTN_W, BTN_H), Image.Resampling.LANCZOS)
-                hov  = ImageOps.fit(Image.open(asset(hover_path)), (BTN_W, BTN_H), Image.Resampling.LANCZOS)
+                norm = ImageOps.fit(Image.open(asset(img_path)),
+                                    (BTN_W, BTN_H), Image.Resampling.LANCZOS)
+                hov  = ImageOps.fit(Image.open(asset(hover_path)),
+                                    (BTN_W, BTN_H), Image.Resampling.LANCZOS)
                 self._img_refs[name]          = ImageTk.PhotoImage(norm)
                 self._img_refs[name + "_hov"] = ImageTk.PhotoImage(hov)
                 btn = Button(self, image=self._img_refs[name],
@@ -181,14 +304,18 @@ class HomeScreen(Frame):
                              activebackground="black", cursor="hand2",
                              command=cmd)
                 btn.pack(pady=8)
-                btn.bind("<Enter>", lambda e, n=name: e.widget.config(image=self._img_refs[n + "_hov"]))
-                btn.bind("<Leave>", lambda e, n=name: e.widget.config(image=self._img_refs[n]))
+                btn.bind("<Enter>",
+                         lambda e, n=name: e.widget.config(
+                             image=self._img_refs[n + "_hov"]))
+                btn.bind("<Leave>",
+                         lambda e, n=name: e.widget.config(
+                             image=self._img_refs[n]))
             except Exception as e:
                 print(f"Button error [{name}]: {e}")
 
 
 # ─────────────────────────────────────────────────────────────
-# APP CONTROLLER  (owns the Tk root)
+# APP CONTROLLER
 # ─────────────────────────────────────────────────────────────
 class Interface:
     def __init__(self):
@@ -197,31 +324,60 @@ class Interface:
         self.root.configure(bg="black")
         self.root.state("zoomed")
 
-        self._current_frame = None
+        # ── Window + taskbar icon ─────────────────────────────
+        ico_path = asset("Assets/BrB.ico")
+        if os.path.exists(ico_path):
+            try:
+                self.root.wm_iconbitmap(ico_path)
+            except Exception:
+                pass
+            try:
+                # iconphoto ensures the icon shows in the taskbar on Windows
+                img = ImageTk.PhotoImage(
+                    Image.open(ico_path).resize((32, 32), Image.Resampling.LANCZOS),
+                    master=self.root)
+                self.root.iconphoto(True, img)
+                self._icon_img = img   # keep reference alive
+            except Exception:
+                pass
+
+        self._current_frame  = None
+        self._current_screen = "menu"   # track which screen for replay
+
+        # Music bar lives on root — persists across all screen switches
+        self._music_bar = MusicBar(self.root, self)
+
         self.show_home()
 
     def _switch(self, frame):
         if self._current_frame is not None:
             self._current_frame.destroy()
         self._current_frame = frame
+        # Keep music bar on top
+        self._music_bar.lift()
+
+    def replay_current_music(self):
+        """Re-trigger the slot music for whichever screen is active."""
+        if self._current_screen == "menu":
+            music.play_menu()
+        elif self._current_screen == "select":
+            music.play_select()
+        elif self._current_screen == "battle":
+            music.play_battle()
 
     def show_home(self):
+        self._current_screen = "menu"
+        music.play_menu()
         self._switch(HomeScreen(self.root, self))
+        self._music_bar.update_label()
 
     def show_char_select(self, mode):
-        """
-        1. Paint loading screen immediately.
-        2. Kick off PIL image processing on a background thread.
-        3. When done, convert PIL→PhotoImage on main thread and show CharacterSelect.
-        """
         from gui.CharacterSelect import preload_images_bg, COLS
 
-        # Show loading screen and force a repaint before anything else
         loading = LoadingScreen(self.root, self)
         self._switch(loading)
-        self.root.update()          # paint loading screen NOW
+        self.root.update()
 
-        # Calculate the same dimensions CharacterSelectScreen will use
         self.root.update_idletasks()
         W = self.root.winfo_width()  or 1280
         H = self.root.winfo_height() or 720
@@ -240,22 +396,22 @@ class Interface:
         THUMB_W   = max(80, (GRID_W - (COLS + 1) * gap) // COLS)
         ICON_SZ   = max(50, BOT_H - 16)
 
-        result = [None]   # shared container for thread result
-        mode_ref = [mode]  # store mode for callback
+        result   = [None]
+        mode_ref = [mode]
 
         def do_preload():
-            # All heavy PIL work happens here (background thread)
             result[0] = preload_images_bg(THUMB_W, THUMB_W, PREV_W, PREV_H, ICON_SZ)
-            # Schedule the final switch on the main thread
-            self.root.after(0, lambda: _on_done())
+            self.root.after(0, _on_done)
 
         def _on_done():
-            # Only switch if loading screen is still showing
             if self._current_frame is loading:
                 loading.stop_animations()
+                self._current_screen = "select"
+                music.play_select()
                 from gui.CharacterSelect import CharacterSelectScreen
                 self._switch(CharacterSelectScreen(
                     self.root, self, mode=mode_ref[0], preloaded=result[0]))
+                self._music_bar.update_label()
 
         threading.Thread(target=do_preload, daemon=True).start()
 
@@ -264,43 +420,38 @@ class Interface:
         guide()
 
     def show_battle(self, mode, p1_name, p2_name):
-        """
-        Load battle scene with loading screen
-        """
         from gui.BattleScene import preload_battle_assets_bg, BattleScene
-        
-        # Show loading screen
+
         loading = LoadingScreen(self.root, self)
         self._switch(loading)
         self.root.update()
-        
-        # Calculate sprite dimensions
+
         self.root.update_idletasks()
-        H = self.root.winfo_height() or 720
+        H        = self.root.winfo_height() or 720
         sprite_h = int(H * 0.45)
-        
+
         result = [None]
-        
+
         def do_preload():
             result[0] = preload_battle_assets_bg(p1_name, p2_name, sprite_h)
-            self.root.after(0, lambda: _on_done())
-        
+            self.root.after(0, _on_done)
+
         def _on_done():
             if self._current_frame is loading:
                 loading.stop_animations()
+                self._current_screen = "battle"
+                music.play_battle()
                 self._switch(BattleScene(
-                    self.root, self, mode, p1_name, p2_name, preloaded=result[0]))
-        
+                    self.root, self, mode, p1_name, p2_name,
+                    preloaded=result[0]))
+                self._music_bar.update_label()
+
         threading.Thread(target=do_preload, daemon=True).start()
 
     def on_selection_done(self, p1_idx, p2_idx, mode):
         from gui.CharacterSelect import CHARACTERS
-        p1_name = CHARACTERS[p1_idx]['name']
-        p2_name = CHARACTERS[p2_idx]['name']
-        print(f"P1 → {p1_name}")
-        print(f"P2 → {p2_name}")
-        
-        # Show loading screen and preload battle assets
+        p1_name = CHARACTERS[p1_idx]["name"]
+        p2_name = CHARACTERS[p2_idx]["name"]
         self.show_battle(mode, p1_name, p2_name)
 
     def run(self):

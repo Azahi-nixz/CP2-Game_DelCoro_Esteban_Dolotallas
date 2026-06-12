@@ -87,7 +87,7 @@ class Minos(Character):
         if move == 2:
             return 2
         if move == 3:
-            return 1
+            return 4
         if move == 4:
             return 10
         return 0

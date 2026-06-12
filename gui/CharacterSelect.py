@@ -16,17 +16,17 @@ def asset(path):
 # ROSTER  (11 characters)
 # ─────────────────────────────────────────────────────────────
 CHARACTERS = [
-    {"name": "Maruzen",  "thumbnail": "Assets/Game characters/MaruzenAssets/Thumbnail_maruzen.png", "desc": "Sanity-driven brawler.\nEnrages when pushed to the edge."},
-    {"name": "Zen",      "thumbnail": "Assets/Game characters/ZenAssets/Zen_thumbnail.png",          "desc": "Calm swordsman.\nBlood Rage unlocks true power."},
-    {"name": "Devourer", "thumbnail": "Assets/Game characters/DevourerAssets/thumbnail_devourer.png", "desc": "Immortal predator.\nDrains life and refuses to die."},
-    {"name": "J.A.D.",   "thumbnail": "Assets/Game characters/JADAssets/Thumbnail_JAD.png",          "desc": "Gun & blade duelist.\nAmmo management is key."},
-    {"name": "Giga",     "thumbnail": "Assets/Game characters/GigaAssets/Thumbnail_Giga.png",        "desc": "Armored tank.\nReflects damage and buffs himself."},
-    {"name": "Minos",    "thumbnail": "Assets/Game characters/MinosAssets/Thumbnail_Minos.png",      "desc": "Luck-based wildcard.\nCan one-shot or barely scratch."},
-    {"name": "Pol",      "thumbnail": "Assets/Game characters/PolAssets/thumbnail_pol.png",           "desc": "Wind warrior.\nSpeed-scaled damage and counters."},
-    {"name": "Sed",      "thumbnail": "Assets/Game characters/SedAssets/Thumbnail_sed.png",          "desc": "War maiden summoner.\nExcalibur mode boosts all stats."},
-    {"name": "???",      "thumbnail": None,                                                           "desc": "Identity unknown.\nComing soon..."},
-    {"name": "???",      "thumbnail": None,                                                           "desc": "Identity unknown.\nComing soon..."},
-    {"name": "???",      "thumbnail": None,                                                           "desc": "Identity unknown.\nComing soon..."},
+    {"name": "Maruzen",      "thumbnail": "Assets/Game characters/MaruzenAssets/Thumbnail_maruzen.png",     "desc": "Sanity-driven brawler.\nEnrages when pushed to the edge."},
+    {"name": "Zen",          "thumbnail": "Assets/Game characters/ZenAssets/Zen_thumbnail.png",             "desc": "Calm swordsman.\nBlood Rage unlocks true power."},
+    {"name": "Devourer",     "thumbnail": "Assets/Game characters/DevourerAssets/thumbnail_devourer.png",   "desc": "Immortal predator.\nDrains life and refuses to die."},
+    {"name": "J.A.D.",       "thumbnail": "Assets/Game characters/JADAssets/Thumbnail_JAD.png",             "desc": "Gun & blade duelist.\nAmmo management is key."},
+    {"name": "Giga",         "thumbnail": "Assets/Game characters/GigaAssets/Thumbnail_Giga.png",           "desc": "Armored tank.\nReflects damage and buffs himself."},
+    {"name": "Minos",        "thumbnail": "Assets/Game characters/MinosAssets/Thumbnail_Minos.png",         "desc": "Luck-based wildcard.\nCan one-shot or barely scratch."},
+    {"name": "Pol",          "thumbnail": "Assets/Game characters/PolAssets/thumbnail_pol.png",             "desc": "Wind warrior.\nSpeed-scaled damage and counters."},
+    {"name": "Sed",          "thumbnail": "Assets/Game characters/SedAssets/Thumbnail_sed.png",             "desc": "War maiden summoner.\nExcalibur mode boosts all stats."},
+    {"name": "Russelle",     "thumbnail": "Assets/Game characters/RusselleAssets/Thumbnail_russelle.png",   "desc": "Iron sleeper.\nTanks hits and revives from death."},
+    {"name": "Sol Emberload","thumbnail": "Assets/Game characters/EmberloadAssets/Emberload_thumbnail.png", "desc": "Living flame.\nBurns enemies and himself each turn."},
+    {"name": "Hotori",       "thumbnail": "Assets/Game characters/EnzoAssets/thumbnail_enzo.png",           "desc": "Time manipulator.\nChrono Shift and Time Stop."},
 ]
 
 COLS = 6
@@ -411,14 +411,9 @@ class CharacterSelectScreen(Frame):
         self._confirm()
 
     def _confirm(self):
-        idx = self.cursor
+        idx  = self.cursor
         char = CHARACTERS[idx]
-        
-        # Validate character has assets
-        if char["thumbnail"] is None:
-            print(f"Cannot select {char['name']} - character not available yet!")
-            return
-        
+
         if self.phase == 1:
             self.p1_choice = idx
             self._p1_name.config(text=CHARACTERS[idx]["name"])

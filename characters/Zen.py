@@ -29,17 +29,17 @@ class Zen(Character):
             if enemy:
                 enemy.take_damage(reflected, self)
 
-            if self.debuffs:
-                debuff_name = next(iter(self.debuffs))
-                duration = self.debuffs[debuff_name]
-
-                print(f"Reflected debuff: {debuff_name}!")
-                enemy.add_debuff(debuff_name, duration)
+                if self.debuffs:
+                    debuff_name = next(iter(self.debuffs))
+                    duration = self.debuffs[debuff_name]
+                    print(f"Reflected debuff: {debuff_name}!")
+                    enemy.add_debuff(debuff_name, duration)
 
             self.Hp -= reduced
             return
 
         self.Hp -= dmg
+        print(f"{self.Name} took {dmg:.1f} damage!")
 
     def check_transformation(self):
         if self.blood_rage > 100:
@@ -62,7 +62,7 @@ class Zen(Character):
         if self.check_hit(enemy):
             dmg = self.Atk
             enemy.take_damage(dmg, self)
-            self.blood_rage /= 2
+            self.blood_rage = int(self.blood_rage / 2)
         else:
             print(f"{enemy.Name} evaded your attack!")
 
@@ -94,5 +94,5 @@ class Zen(Character):
         if self.Form == "Blood rage":
             if self.turn_counter >= 4:
                 self.Form = "normal"
-                self.blood_rage /= 2
+                self.blood_rage = int(self.blood_rage / 2)
                 print(f"{self.Name} calmed down. Blood Rage ended.")

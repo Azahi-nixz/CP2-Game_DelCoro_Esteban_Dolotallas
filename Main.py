@@ -198,4 +198,22 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import ctypes
+    import sys
+    import os
+
+    # ── Taskbar icon fix (Windows) ────────────────────────────
+    # Must be called before the Tk root is created.
+    if sys.platform == "win32":
+        try:
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+                "BluRoomBattlefield.App.1.0"
+            )
+        except Exception:
+            pass
+
+    from gui.FontLoader import load_fonts
+    load_fonts()
+    from gui.Interface import Interface
+    app = Interface()
+    app.run()

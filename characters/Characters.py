@@ -1,5 +1,4 @@
 import random
-from Main import battle
 
 
 class Character:
@@ -49,11 +48,11 @@ class Character:
         print(f"{self.Name} gained buff: {name} ({duration} turns)")
 
     def add_debuff(self, name, duration):
-        if "S.E Immunity" not in self.debuffs:
+        if "S.E. Immunity" in self.buffs or "S.E Immunity" in self.buffs:
+            print(f"{self.Name} has Status effect immunity! Cannot inflict debuff!")
+        else:
             self.debuffs[name] = duration
             print(f"{self.Name} received debuff: {name} ({duration} turns)")
-        else:
-            print(f"{self.Name} has Status effect immunity! Cannot inflict debuff!")
 
     def reduce_effects(self):
         expired = []
@@ -94,6 +93,9 @@ class Character:
         if self.has_debuff("Sabotage") and move != 1:
             print("You are sabotaged! Only Basic Attack allowed!")
             return 1
+        if self.has_debuff("Basic Only") and move != 1:
+            print("You can only use Basic Attack!")
+            return 1
         return move
 
     def end_of_round_effects(self, enemy):
@@ -101,6 +103,10 @@ class Character:
             bleeding = self.MaxHp * 0.2
             print(f"{self.Name} is bleeding!")
             self.take_damage(bleeding, enemy)
+        if self.has_debuff("Burned"):
+            burn_dmg = self.MaxHp * 0.05
+            print(f"{self.Name} is burning!")
+            self.take_damage(burn_dmg, enemy)
 
 
 

@@ -43,7 +43,7 @@ class Pol(Character):
 
     def skill_1(self, enemy):
         print("Stance: Unyielding")
-        self.add_buff("High Counter", 3)
+        self.add_buff("High counter", 3)
 
     def skill_2(self, enemy):
         if self.check_hit(enemy):

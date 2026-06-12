@@ -24,7 +24,7 @@ class Russel(Character):
             print(f"{self.Name} reduces damage while sleeping!")
         
         # Apply vulnerable debuff increase
-        if self.has_buff("Vulnerable"):
+        if self.has_debuff("Vulnerable"):
             final_damage *= 1.2
             print(f"{self.Name} is Vulnerable and takes 20% more damage!")
         

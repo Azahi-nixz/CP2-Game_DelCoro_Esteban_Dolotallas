@@ -92,15 +92,21 @@ class JAD(Character):
     def basic_attack(self, enemy):
         if self.check_hit(enemy):
             if self.Form == "Gun":
-                dmg = self.Atk * 0.3
-                self.ammo -= 1
-                enemy.take_damage(dmg, self)
-                print("J.A.D. used his gun!")
+                if self.ammo > 0:
+                    dmg = self.Atk * 0.3
+                    self.ammo -= 1
+                    enemy.take_damage(dmg, self)
+                    print("J.A.D. used his gun!")
+                else:
+                    dmg = self.Atk * 0.2
+                    enemy.take_damage(dmg, self)
+                    print("J.A.D. used his knife! (no ammo)")
             elif self.Form == "Hand":
                 dmg = self.Atk * 0.2
                 enemy.take_damage(dmg, self)
                 print("J.A.D. used his knife!")
-        else: print(f"{enemy.Name} evaded your attack!")
+        else:
+            print(f"{enemy.Name} evaded your attack!")
 
     def is_headshot(self):
         r = random.randint(0, 100)
