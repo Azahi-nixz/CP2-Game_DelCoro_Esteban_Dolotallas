@@ -4,7 +4,6 @@ A character that can heal, tank, and transform into another beast that gains imm
 //Skillset
 Passive: Iron Will
 "The longer it lasts, the stronger I get."
-
 Devourer starts with a low hp. But every 2 turns, Devourer's HP increases its HP capacity to 5 more HP. The maximum HP capacity is 150.
 
 Skill 1: Lemme Suck Em'
@@ -47,86 +46,64 @@ All stats have been double for a short turn of time. Enhancing the attacks and a
 Character - JAD
 A character that can snipe people, whether people or enemies. This character has two weapons: the knife and gun.
 
-//Skillset
+Skillset
 Passive: Stealth
-
 Everytime he uses a skill gain stealth for 1 turn. Stealth raise atk and speed
-
 JAD uses two weapons: Hand gun and knife. If his ammunition was used, switch to knife mode. Ammunition recharge 2 per turn
 
 Skill 1: Gunho
 This skill can cancel ongoing skill for enemy (buff and debuff). CD: 5 turns
 
 Skill 2: Longshot: uses 2 ammunition
-
 Uses his gun to snipe target, dealing dmg equal to 60% of its attack. There’s a 10 percent chance of inflicting headshot, reducing enemy hp to 1
-
 Knife mode: Backstab
-
 Inflict dmg equal to 40% of atk. Cannot be blocked
 
 Skill 3: Mist: uses 3 ammunition
-
 Uses specialized ammunition to inflict blindness to enemy, reducing speed for 100% for 2 turns
 
 Knife mode: Throat cutter
-
 Attempt to execute the enemy. Chance of succession is based on 10% of current accuracy.
 
 Basic attack:
 Fires a gun, used 1 ammo, dealing 30% of atk as dmg
-
 If no ammo, uses his knife, dealing 20% damage to enemy
 
 
 
 Character - Maruzensky
 Passive: This character doesn’t use mana, instead it uses sanity. (Base 100). If sanity dropped to 30, immediately transform to enraged mode. All skills will change including passive.
-
 For every hit received, sanity will decrease by 10.
 
 This character is also immune to instant kill on the first turn.
 
 Skill 1: Please slap me
-
 Damage received from the last enemy attack will be converted into HP. Uses 20 sanity. Cooldown: 2 turns
 
 Skill 2: Wdym? I’m used to feeling pain…
-
 Grants immunity to physical damage for two turns. Uses 30 sanity. Cool down: 5 turns
 
 Skill 3: Unreal calculation
-
 This character will attempt to guess enemy’s move. (Basic attack or use skill 1 to 3). If guessed correctly, the enemy will receive the damage instead. Cooldown: 4 turns. This move uses 20 sanity and will be doubled if guess is wrong.
-
 
 Basic attack: Why would I fight?
 This character’s basic attack has no damage. Instead, it will be used to recover sanity. There’s a 10% chance of you gaining another turn when used.
 
 Enraged form:
-
 Passive: Revenge
-
 Every attack it receives will reflect to the attacker, dealing 75% of the original damage.
-
 This character will only receive 25% of the current damage dealt.
-
 Receive death immunity for two turns. But will have negative HP. This character will die if negative HP did not healed after two turns.
-
 This character will also die if sanity was drained to zero.
 
-
 1st skill: Manipulation
-
 This character will attempt to manipulate the enemy, making them to immediately surrender. Base chance is 5%. Every turn, the chance will increase to 5%.
 
 2nd skill: Death wish
-
 This character will wish for the user’s downfall, dealing 30 true damege to the enemy. Damage increase based on current sanity. If sanity is smaller, this skill deals more damage. Uses 10 sanity. No cooldown.
 
 
 3rd skill: System sabotage
-
 This skill will make enemy’s move only use basic attack. 2 turns duration. Cooldown: 4 turns
 
 Basic attack: Payback
@@ -134,7 +111,6 @@ This basic attack has no damage. It recovers 5 sanity for every successive hits.
 
 
 Character - Minos
-
 Passive: “Jackpot!”
 In the next 5 Turns, become immune to ALL status effects and gain “Health Regen” for the next 5 turns.
 Passive: “Bust!”
@@ -149,3 +125,94 @@ Desc: Perform a coin flip which has a 50/50 chance of either getting Jackpot or 
 Skill 3: “It was Inevitable”
 Accessible after 5 turns, CD: 10 turns
 Desc: Gain Undying and Health Regen for the next 3 turns.
+
+Character - Sol Emberlord
+Passive: The Sol
+All of Chester’s moves contains burning effect. In exchange, Chester takes 5 damage.
+
+
+Skill 1: Sol kick
+Chester dashes and kicks the opponent. Dealing 25 damage.
+
+Skill 2: Sol Doppleflame
+Chester creates a clone of himself to confuse the opponent. The opponent’s accuracy is decreases by 30 and gives the opponent burning effect. Chester restores 15 hp after using this move.
+
+Skill 3: Sol Infinite Ember Requiem
+Chester creates thousands of afterimages then explodes into a sea of flames that deals 40% of the opponent’s hp.
+
+
+Character - Hotori
+Passive: 
+There is a 40% chance that Enzo will have an extra turn.
+
+
+Skill 1: Chrono Shift
+Reverts the damage taken from the previous turn
+
+Skill 2: Godspeed
+Enzo deals a barrage of attacks that deal 30% of the opponent’s HP
+
+Skill 3: World’s Tide
+Enzo stops time, making the opponent vulnerable for 3 turns and the cooldown of all skills are reseted.
+
+Passive: “Relentless Fortitude”
+Reduce damage taken from attacks by 20%
+
+Passive: “Age of Retribution”
+When HP reaches 30% or below, gain Health Regeneration for the next 3 turns (One time.) 
+
+Skill 1: “Sleep Cures All”
+CD: 5 turns
+Sleep (Do not take any action) and recover 30% of max health. Reduce Damage taken by 15% during Sleeping.
+
+Skill 2: “Let’s Dance!” (Taunt)
+CD: 2 Turns
+Make the opponent use only basic attack on their next turn. You and the opponent take 20% more damage.
+
+Skill 3: “Guardian Angel” (Passive)
+One-time use only
+Reject Dying and return alive with 35% of your max HP and become immune to all negative status effects for the next turn. (HP cannot go above 35% of Max Health)
+
+Character - Zen 
+Passive: Zen has a meter that can be filled up by attacking. Zen needs to reach 100 damage to activate his “Blood Rage”. Blood Rage can be manually activated by the player. If activated, Zen’s speed and accuracy goes up to 100 and attack by 50.  Blood Rage can last up to 3 turns.
+
+
+Skill 1: A Lost Cause
+“Why is it always me..?”
+Zen slashes his enemy dealing low damage to it. But gaining 40 Blood Rage meter.
+
+Skill 2: A Silent Plead
+“It wasn’t my fault.”
+
+Zen can counter the enemy’s next move. If it’s a debuff, it reflects the debuff to the enemy. If it’s  an attack, it reflects 30% of its original damage and gaining 20 Blood meter from it.
+
+Skill 3: Death’s Slash
+“You’ll never understand, Dave.”
+Zen slashes 6 times dealing massive damage. But it costs 50% of its Blood Rage.
+
+Character - Pol
+Passive: Blessing of Hael
+Pol receives a healing blessing from Hael every turn. Pol heals 5 HP.
+
+1st skill: Stance: Unyielding
+Pol does a stance of Unyielding. Reflecting all damage and debuffs to the opponent.
+
+2nd skill: Drive: Windcharge
+Pol charges to the opponent dealing 20% of his attack and + 30% of his speed.
+
+3rd skill: Summon: Wind Maiden Hael
+Pol will summon Hael and covenant of the Wind. Boosting Pol’s attack by 20 and speed by 70.
+
+
+Character - Sed
+Passive: 
+Sed’s basic attack is guaranteed to hit.
+
+Skill 1: Serene Posture
+Sed does a serene posture. Boosting his basic attack for 50%
+
+Skill 2: Warhammer Onslaught 
+Sed hits the opponent with his hammer. Dealing 60% of his attack to his opponent.
+
+Skill 3: Summon: War Maiden Ei-ram
+Sed will purify all of his debuff and summon Ei-ram. Ei-ram will use Excalibur to boost Sed’s attack to 70.
