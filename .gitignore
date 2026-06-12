@@ -10,3 +10,5 @@ dist/
 dist2/
 *.egg-info/
 UNZIP_*/
+BrB_v*/
+*.zip
