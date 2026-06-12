@@ -121,7 +121,7 @@ ANIM_CONFIG = {
     "Minos":         {"attack_color": "#ffd700", "hit_color": "#cc9900", "attack_offset": 55},
     "Pol":           {"attack_color": "#88ffee", "hit_color": "#44ccaa", "attack_offset": 75},
     "Sed":           {"attack_color": "#ff88cc", "hit_color": "#cc4488", "attack_offset": 60},
-    "Russelle":      {"attack_color": "#ccccff", "hit_color": "#8888cc", "attack_offset": 40},
+    "Russel":        {"attack_color": "#ccccff", "hit_color": "#8888cc", "attack_offset": 40},
     "Sol Emberload": {"attack_color": "#ff4400", "hit_color": "#cc2200", "attack_offset": 65},
     "Hotori":        {"attack_color": "#00eeff", "hit_color": "#0099bb", "attack_offset": 80},
 }
@@ -203,12 +203,12 @@ SKILL_DESCS = {
             ("War Maiden Ei-ram",          "Gain Excalibur buff. Clear debuffs."),
         ],
     },
-    "Russelle": {
+    "Russel": {
         "normal": [
             ("Basic\nIron Fist",           "20 + 0.5x ATK. 80% dmg reduction."),
-            ("Deep Sleep",                 "Heal 30% MaxHP. Gain Sleeping buff."),
-            ("Mutual Vulnerability",       "Both fighters take 20% more damage."),
-            ("Last Stand",                 "Revive from 0 HP once. CD: infinite."),
+            ("Sleep Cures All",            "Heal 30% MaxHP. 15% extra dmg reduction while sleeping."),
+            ("Let's Dance!",               "Taunt: enemy uses basic only. Both take 20% more dmg."),
+            ("Guardian Angel",             "Passive: Auto-revive at 35% HP once. Immune to debuffs 1 turn."),
         ],
     },
     "Sol Emberload": {
