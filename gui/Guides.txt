@@ -155,6 +155,8 @@ Enzo deals a barrage of attacks that deal 30% of the opponent’s HP
 Skill 3: World’s Tide
 Enzo stops time, making the opponent vulnerable for 3 turns and the cooldown of all skills are reseted.
 
+Character: Russelle
+
 Passive: “Relentless Fortitude”
 Reduce damage taken from attacks by 20%
 
